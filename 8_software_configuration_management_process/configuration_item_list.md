@@ -1,7 +1,7 @@
 # 構成アイテム一覧(CI List)
 
 **ドキュメント ID:** CIL-TH25S-001
-**バージョン:** 1.4
+**バージョン:** 1.5
 **最終更新日:** 2026-05-15
 **対象製品:** 仮想 Therac-25 Simple / TH25S-SIM-001
 **対象リリース:** 1.0.0
@@ -36,7 +36,7 @@
 | CI ID | ドキュメント | パス | 現行バージョン | 状態 |
 |-------|-----------|------|-------------|------|
 | CI-DOC-SDP | ソフトウェア開発計画書 | `5.1_software_development_planning/` | 1.2 | 承認済(CR-0001 で 1.1、CR-0002 で 1.2 へ昇格) |
-| CI-DOC-SRS | ソフトウェア要求仕様書 | `5.2_software_requirements_analysis/` | 1.0 | 承認済 |
+| CI-DOC-SRS | ソフトウェア要求仕様書 | `5.2_software_requirements_analysis/` | 1.1 | 承認済(CR-0005 で 1.1 へ昇格、§9 に as-released 状態の説明を追加) |
 | CI-DOC-SAD | ソフトウェアアーキテクチャ設計書 | `5.3_software_architecture_design/` | 1.2 | 承認済(CR-0001 で 1.1、CR-0002 で 1.2 へ昇格) |
 | CI-DOC-SDD | ソフトウェア詳細設計書 | `5.4_software_detailed_design/` | 1.0 | 承認済 |
 | CI-DOC-UTPR | ユニットテスト計画書/報告書 | `5.5_software_unit_implementation/` | 1.2 | 承認済(CR-0001 で 1.1、CR-0002 で 1.2 へ昇格) |
@@ -49,14 +49,14 @@
 | CI-DOC-RMF | リスクマネジメントファイル(ISO 14971) | `7_software_risk_management_process/` | 1.1 | 承認済(CR-0004 で 1.1 へ昇格、§4.2 に EV-NNN ラベル定義を追加) |
 | CI-DOC-SCMP | ソフトウェア構成管理計画書 | `8_software_configuration_management_process/` | 1.0 | 承認済 |
 | CI-DOC-CCB | CCB 運用規程 | `8_software_configuration_management_process/` | 1.0 | 承認済 |
-| CI-DOC-CRR | 変更要求台帳 | `8_software_configuration_management_process/` | 1.4 | 承認済(CR-0001 で 1.1、CR-0002 で 1.2、CR-0003 で 1.3、CR-0004 で 1.4 へ昇格) |
-| CI-DOC-CIL | 構成アイテム一覧(本書、自己参照) | `8_software_configuration_management_process/` | 1.4 | 承認済(CR-0001 で 1.1、CR-0002 で 1.2、CR-0003 で 1.3、CR-0004 で 1.4 へ昇格) |
+| CI-DOC-CRR | 変更要求台帳 | `8_software_configuration_management_process/` | 1.5 | 承認済(CR-0001 で 1.1、CR-0002 で 1.2、CR-0003 で 1.3、CR-0004 で 1.4、CR-0005 で 1.5 へ昇格) |
+| CI-DOC-CIL | 構成アイテム一覧(本書、自己参照) | `8_software_configuration_management_process/` | 1.5 | 承認済(CR-0001 で 1.1、CR-0002 で 1.2、CR-0003 で 1.3、CR-0004 で 1.4、CR-0005 で 1.5 へ昇格) |
 | CI-DOC-SPRP | ソフトウェア問題解決手順書 | `9_software_problem_resolution_process/` | 1.0 | 承認済 |
-| CI-DOC-ACL | IEC 62304 監査チェックリスト | `compliance/` | 1.4 | 承認済(CR-0001 で 1.1、CR-0002 で 1.2、CR-0003 で 1.3、CR-0004 で 1.4 へ昇格、略語表に日本語訳・ACL 自身を追加) |
+| CI-DOC-ACL | IEC 62304 監査チェックリスト | `compliance/` | 1.5 | 承認済(CR-0001 で 1.1、CR-0002 で 1.2、CR-0003 で 1.3、CR-0004 で 1.4、CR-0005 で 1.5 へ昇格、略語表に日本語訳・ACL 自身を追加) |
 | CI-DOC-CLAUDE | プロジェクト指示(CLAUDE.md) | `CLAUDE.md` | 1.0 | 承認済 |
 | CI-DOC-README | プロジェクト概要(README.md) | `README.md` | 1.0 | 承認済 |
-| CI-DOC-STEPS | 開発ステップ記録 / 日割りガイド | `DEVELOPMENT_STEPS.md` | 1.4 | 承認済(CR-0001 で 1.1、CR-0002 で 1.2、CR-0003 で 1.3、CR-0004 で 1.4 へ昇格) |
-| CI-DOC-QA | IEC 62304 Q&A 記録(学習プロジェクト固有、CR-0004 で新設) | `IEC62304_QA.md`(文書 ID `QAR-TH25S-001`) | 1.0 | 承認済 |
+| CI-DOC-STEPS | 開発ステップ記録 / 日割りガイド | `DEVELOPMENT_STEPS.md` | 1.5 | 承認済(CR-0001 で 1.1、CR-0002 で 1.2、CR-0003 で 1.3、CR-0004 で 1.4、CR-0005 で 1.5 へ昇格) |
+| CI-DOC-QA | IEC 62304 Q&A 記録(学習プロジェクト固有、CR-0004 で新設) | `IEC62304_QA.md`(文書 ID `QAR-TH25S-001`) | 1.1 | 承認済(CR-0005 で 1.1 へ昇格、QA-002 追加) |
 
 ## 5. SOUP(Software of Unknown Provenance)
 
@@ -104,6 +104,7 @@
 | BL-20260515-005 | 2026-05-15 | 文書修正(SOUP-002 環境別バージョン正確化) | 開発者A | CR-0002 |
 | BL-20260515-006 | 2026-05-15 | 文書改善(略語辞書を README §略語に新設、ACL §10 を充実化) | 開発者A | CR-0003 |
 | BL-20260515-007 | 2026-05-15 | Q&A 制度の確立(IEC62304_QA.md 新設) + RMF §4.2 EV-NNN ラベル定義の補完 | 開発者A | CR-0004 |
+| BL-20260515-008 | 2026-05-15 | QA-002 追加(SRS §9 反復更新パターン) + SRS §9 / DEVELOPMENT_STEPS への as-released 状態の説明追加 | 開発者A | CR-0005 |
 
 ## 10. 改訂履歴
 
@@ -114,6 +115,7 @@
 | 1.2 | 2026-05-15 | CR-0002 反映: §5 / §6 の SOUP-002 GoogleTest バージョン記載を環境別(macOS Homebrew 1.17.0 / Ubuntu 24.04 apt 1.14.0)に正確化。§9 にベースライン BL-20260515-005 を追加。§4 ドキュメント現行版を該当文書の 1.2 昇格に同期、§10 自己参照を 1.2 へ昇格。 | 開発者A |
 | 1.3 | 2026-05-15 | CR-0003 反映: §4 ドキュメント現行版を CRR/ACL/CIL/STEPS の 1.3 昇格に同期。§9 にベースライン BL-20260515-006 を追加。§10 自己参照を 1.3 へ昇格。SOUP・ソースコード・試験資産は不変。 | 開発者A |
 | 1.4 | 2026-05-15 | CR-0004 反映: §4 に CI-DOC-QA(IEC62304_QA.md / QAR-TH25S-001 v1.0、新設)を追加。CI-DOC-RMF を 1.1 へ更新(§4.2 EV-NNN ラベル追加)。CRR/CIL/STEPS/ACL を 1.4 へ昇格に同期。§9 にベースライン BL-20260515-007 を追加。§10 自己参照を 1.4 へ昇格。SOUP・ソースコード・試験資産は不変。 | 開発者A |
+| 1.5 | 2026-05-15 | CR-0005 反映: §4 の CI-DOC-SRS を 1.1 へ更新(§9 as-released 説明追加)、CI-DOC-QA を 1.1 へ更新(QA-002 追加)。CRR/CIL/STEPS/ACL を 1.5 へ昇格に同期。§9 にベースライン BL-20260515-008 を追加。§10 自己参照を 1.5 へ昇格。SOUP・ソースコード・試験資産は不変。 | 開発者A |
 
 ## 付録 A: CIL 更新時チェックリスト
 
