@@ -1,7 +1,7 @@
 # ソフトウェアユニットテスト計画書/報告書
 
 **ドキュメント ID:** UTPR-TH25S-001
-**バージョン:** 1.1
+**バージョン:** 1.2
 **作成日:** 2026-05-13
 **対象製品:** 仮想 Therac-25 Simple / TH25S-SIM-001
 **対象ソフトウェアバージョン:** 1.0.0
@@ -81,7 +81,7 @@
 
 ### 7.1 試験環境
 - ホスト環境: PC(macOS / Linux)、GCC または Clang(C11 / C++17)
-- 試験フレームワーク: **CppUTest 4.0(SOUP-001、既定)** または **GoogleTest 1.17.0(SOUP-002、CR-0001 で追加)** のいずれか、または両方。CMake オプション `-DTH25S_TEST_FRAMEWORK=cpputest|gtest|both` で選択する。
+- 試験フレームワーク: **CppUTest 4.0(SOUP-001、既定)** または **GoogleTest(SOUP-002、CR-0001 で追加、CR-0002 で環境別バージョン正確化: macOS Homebrew = 1.17.0 / Ubuntu 24.04 apt `libgtest-dev` = 1.14.0)** のいずれか、または両方。CMake オプション `-DTH25S_TEST_FRAMEWORK=cpputest|gtest|both` で選択する。
 - 試験フレームワーク互換層: `tests/test_framework.h` が両フレームワーク間の API 差を吸収する。同一の試験ソース(`tests/test_*.cpp`)が両フレームワークでコンパイル可能。
 - 検出: CppUTest は pkg-config 経由、GoogleTest は `find_package(GTest)` 経由でリンクする。
 - ビルド: CMake 3.20 以上 / `cmake -B build && cmake --build build`
@@ -176,7 +176,7 @@
 - 実施日: 2026-05-13(CppUTest)、2026-05-15(GoogleTest 追加検証 ― CR-0001)
 - 実施者: 開発者A(全ロール兼任)
 - ソフトウェアバージョン: 1.0.0(製品コード不変)
-- 試験環境: PC ホスト、CMake 3.20 以上 + CppUTest 4.0 + GoogleTest 1.17.0、`ctest`
+- 試験環境: PC ホスト、CMake 3.20 以上 + CppUTest 4.0 + GoogleTest(macOS Homebrew 1.17.0 / Ubuntu 24.04 apt 1.14.0)、`ctest`
 - 実行コマンド(CR-0001 後): `cmake -B build -DCMAKE_BUILD_TYPE=Debug -DTH25S_TEST_FRAMEWORK=both && cmake --build build && ctest --test-dir build --output-on-failure`
 
 ### 8.2 試験ケース結果
@@ -243,3 +243,4 @@ GoogleTest 実行結果(`th25s_tests_gtest`、CR-0001 後):
 |----------|------|---------|--------|
 | 1.0 | 2026-05-13 | 初版作成(計画 + 報告)。UNIT-001〜003 の実装と全 55 試験ケースの合格を記録。 | 開発者A |
 | 1.1 | 2026-05-15 | CR-0001 反映: §7.1 試験環境に GoogleTest(SOUP-002)選択を追加、§8.1 / §8.2 に GoogleTest 実行結果と両フレームワーク合格を追記。試験ケース定義(§7.2)・カバレッジ(§7.3 / §8.3)・トレーサビリティ(§10)は不変(同一ケース集合)。 | 開発者A |
+| 1.2 | 2026-05-15 | CR-0002 反映: §7.1 / §8.1 の GoogleTest バージョン記載を環境別(macOS Homebrew 1.17.0 / Ubuntu 24.04 apt 1.14.0)に正確化。試験結果・カバレッジ・トレーサビリティは不変。 | 開発者A |

@@ -8,7 +8,7 @@
 
 - **対象安全クラス: クラス C**(死亡又は重傷の可能性)
 - **実装言語: C11**(ISO/IEC 9899:2011)
-- **試験フレームワーク: CppUTest 4.0**(SOUP-001、既定)または **GoogleTest 1.17.0**(SOUP-002、CR-0001 で追加)。CMake オプション `-DTH25S_TEST_FRAMEWORK=cpputest|gtest|both` で選択。両フレームワークで同一の試験ケースが走る(`tests/test_framework.h` 互換層)。
+- **試験フレームワーク: CppUTest 4.0**(SOUP-001、既定)または **GoogleTest**(SOUP-002、CR-0001 で追加、CR-0002 で環境別バージョン正確化: macOS Homebrew = 1.17.0 / Ubuntu 24.04 apt `libgtest-dev` = 1.14.0)。CMake オプション `-DTH25S_TEST_FRAMEWORK=cpputest|gtest|both` で選択。両フレームワークで同一の試験ケースが走る(`tests/test_framework.h` 互換層)。
 - **ファイル形式: Markdown**(Git での差分管理を前提)
 - **ベーステンプレート: [grace2riku/iec62304_template](https://github.com/grace2riku/iec62304_template)**
 

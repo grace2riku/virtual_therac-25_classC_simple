@@ -40,7 +40,7 @@ Therac-25 は 1982 年に AECL が開発した放射線治療装置です。1985
 | ソフトウェア名称 | Therac-25 Simple Beam Interlock Software(TH25S-CORE) |
 | ソフトウェア安全クラス | **C**(IEC 62304) |
 | 実装言語 | **C11** |
-| 試験フレームワーク | **CppUTest 4.0**(SOUP-001、既定)または **GoogleTest 1.17.0**(SOUP-002、CR-0001 で追加)を CMake オプションで選択 |
+| 試験フレームワーク | **CppUTest 4.0**(SOUP-001、既定)または **GoogleTest**(SOUP-002、CR-0001 で追加。実バージョンは macOS Homebrew で 1.17.0、Ubuntu 24.04 apt で 1.14.0)を CMake オプションで選択 |
 | ライフサイクルモデル | V 字モデル(単一インクリメント・7 日) |
 | リリースバージョン | 1.0.0 |
 
@@ -88,7 +88,7 @@ ARCH-001  TH25S-CORE 安全コア (libth25s_core.a)
 - CMake 3.20 以上
 - 試験フレームワーク (どちらか、または両方)
   - **CppUTest 4.0** + pkg-config — macOS: `brew install cpputest` / Ubuntu/Debian: `sudo apt-get install libcpputest-dev`
-  - **GoogleTest 1.17.0** — macOS: `brew install googletest` / Ubuntu/Debian: `sudo apt-get install libgtest-dev`
+  - **GoogleTest 1.x** — macOS: `brew install googletest`(2026-05-15 時点で 1.17.0)/ Ubuntu/Debian: `sudo apt-get install libgtest-dev`(Ubuntu 24.04 では 1.14.0)。両環境で本プロジェクトの試験 API(`TEST`/`TEST_F`/`EXPECT_EQ`/`EXPECT_TRUE`/`EXPECT_FALSE` 等)は互換
 
 ### 手順
 
