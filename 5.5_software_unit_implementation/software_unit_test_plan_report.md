@@ -1,7 +1,7 @@
 # ソフトウェアユニットテスト計画書/報告書
 
 **ドキュメント ID:** UTPR-TH25S-001
-**バージョン:** 1.0
+**バージョン:** 1.1
 **作成日:** 2026-05-13
 **対象製品:** 仮想 Therac-25 Simple / TH25S-SIM-001
 **対象ソフトウェアバージョン:** 1.0.0
@@ -81,10 +81,12 @@
 
 ### 7.1 試験環境
 - ホスト環境: PC(macOS / Linux)、GCC または Clang(C11 / C++17)
-- 試験フレームワーク: CppUTest 4.0(SOUP-001、pkg-config 経由でリンク)
+- 試験フレームワーク: **CppUTest 4.0(SOUP-001、既定)** または **GoogleTest 1.17.0(SOUP-002、CR-0001 で追加)** のいずれか、または両方。CMake オプション `-DTH25S_TEST_FRAMEWORK=cpputest|gtest|both` で選択する。
+- 試験フレームワーク互換層: `tests/test_framework.h` が両フレームワーク間の API 差を吸収する。同一の試験ソース(`tests/test_*.cpp`)が両フレームワークでコンパイル可能。
+- 検出: CppUTest は pkg-config 経由、GoogleTest は `find_package(GTest)` 経由でリンクする。
 - ビルド: CMake 3.20 以上 / `cmake -B build && cmake --build build`
-- 実行: `ctest --test-dir build --output-on-failure`
-- 試験コード: `tests/test_common_types.cpp` / `tests/test_treatment_sequencer.cpp` / `tests/test_safety_interlock.cpp`
+- 実行: `ctest --test-dir build --output-on-failure`(`both` 選択時は cpputest 版と gtest 版の 2 つの実行ファイルを順に実行する)
+- 試験コード: `tests/test_common_types.cpp` / `tests/test_treatment_sequencer.cpp` / `tests/test_safety_interlock.cpp`(両フレームワーク共通の単一ソース)
 
 ### 7.2 試験ケース定義
 
@@ -171,11 +173,11 @@
 ## 8. 試験実施結果
 
 ### 8.1 実施サマリ
-- 実施日: 2026-05-13
+- 実施日: 2026-05-13(CppUTest)、2026-05-15(GoogleTest 追加検証 ― CR-0001)
 - 実施者: 開発者A(全ロール兼任)
-- ソフトウェアバージョン: 1.0.0
-- 試験環境: PC ホスト、CMake 3.20 以上 + CppUTest 4.0、`ctest`
-- 実行コマンド: `cmake -B build -DCMAKE_BUILD_TYPE=Debug && cmake --build build && ctest --test-dir build --output-on-failure`
+- ソフトウェアバージョン: 1.0.0(製品コード不変)
+- 試験環境: PC ホスト、CMake 3.20 以上 + CppUTest 4.0 + GoogleTest 1.17.0、`ctest`
+- 実行コマンド(CR-0001 後): `cmake -B build -DCMAKE_BUILD_TYPE=Debug -DTH25S_TEST_FRAMEWORK=both && cmake --build build && ctest --test-dir build --output-on-failure`
 
 ### 8.2 試験ケース結果
 
@@ -186,14 +188,26 @@
 | UNIT-003 | UT-003-01〜UT-003-14 | 14 | 全件合格 |
 | **合計** | — | **55** | **全件合格** |
 
-CppUTest 実行結果(`th25s_tests`)の総括:
+CppUTest 実行結果(`th25s_tests_cpputest`)の総括:
 
 ```
 OK (55 tests, 55 ran, 760 checks, 0 ignored, 0 filtered out)
-ctest: 100% tests passed, 0 tests failed out of 1
 ```
 
-ビルド時のコンパイラ厳格警告: **0 件**(警告ゼロ。受入基準 5 章 -2 を満たす)。
+GoogleTest 実行結果(`th25s_tests_gtest`、CR-0001 後):
+
+```
+[==========] 55 tests from 6 test suites ran.
+[  PASSED  ] 55 tests.
+```
+
+`TH25S_TEST_FRAMEWORK=both` での ctest 集計:
+
+```
+100% tests passed, 0 tests failed out of 2  (cpputest 版 + gtest 版の 2 ctest エントリ)
+```
+
+ビルド時のコンパイラ厳格警告: **0 件**(警告ゼロ。受入基準 5 章 -2 を満たす)。両フレームワークで同一の試験ケース集合が合格することを確認した(`tests/test_framework.h` 互換層により試験ロジックは単一ソース)。
 
 ### 8.3 カバレッジ実績
 | ユニット ID | ステートメント | 分岐 | 備考 |
@@ -228,3 +242,4 @@ ctest: 100% tests passed, 0 tests failed out of 1
 | バージョン | 日付 | 変更内容 | 変更者 |
 |----------|------|---------|--------|
 | 1.0 | 2026-05-13 | 初版作成(計画 + 報告)。UNIT-001〜003 の実装と全 55 試験ケースの合格を記録。 | 開発者A |
+| 1.1 | 2026-05-15 | CR-0001 反映: §7.1 試験環境に GoogleTest(SOUP-002)選択を追加、§8.1 / §8.2 に GoogleTest 実行結果と両フレームワーク合格を追記。試験ケース定義(§7.2)・カバレッジ(§7.3 / §8.3)・トレーサビリティ(§10)は不変(同一ケース集合)。 | 開発者A |

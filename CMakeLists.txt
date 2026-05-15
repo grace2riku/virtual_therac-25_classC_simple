@@ -34,9 +34,17 @@ set(TH25S_C_WARNINGS
 # 安全コアライブラリ。
 add_subdirectory(src/th25s_core)
 
-# 試験ツリー (CppUTest が必要)。vcpkg / pkg-config 不在の環境では OFF にできる:
+# 試験ツリー。試験フレームワーク不在の環境では OFF にできる:
 #   cmake -B build -DTH25S_BUILD_TESTS=OFF
-option(TH25S_BUILD_TESTS "Build the CppUTest unit test tree" ON)
+option(TH25S_BUILD_TESTS "Build the unit test tree" ON)
+
+# 試験フレームワーク選択 (CR-0001 / SOUP-002 GoogleTest 追加で導入)。
+# CppUTest と GoogleTest のいずれか、または両方で同一の試験ケースを実行できる。
+# 両方選んだ場合、ctest は両フレームワークの試験を続けて実行する。
+set(TH25S_TEST_FRAMEWORK "cpputest" CACHE STRING
+    "Test framework: cpputest, gtest, or both")
+set_property(CACHE TH25S_TEST_FRAMEWORK PROPERTY STRINGS "cpputest" "gtest" "both")
+
 if(TH25S_BUILD_TESTS)
     enable_testing()
     add_subdirectory(tests)

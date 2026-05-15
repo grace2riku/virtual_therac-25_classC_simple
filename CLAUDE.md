@@ -8,7 +8,7 @@
 
 - **対象安全クラス: クラス C**(死亡又は重傷の可能性)
 - **実装言語: C11**(ISO/IEC 9899:2011)
-- **試験フレームワーク: CppUTest 4.0**(SOUP-001)
+- **試験フレームワーク: CppUTest 4.0**(SOUP-001、既定)または **GoogleTest 1.17.0**(SOUP-002、CR-0001 で追加)。CMake オプション `-DTH25S_TEST_FRAMEWORK=cpputest|gtest|both` で選択。両フレームワークで同一の試験ケースが走る(`tests/test_framework.h` 互換層)。
 - **ファイル形式: Markdown**(Git での差分管理を前提)
 - **ベーステンプレート: [grace2riku/iec62304_template](https://github.com/grace2riku/iec62304_template)**
 
@@ -107,7 +107,7 @@
 ### 言語・実装技術の固定
 
 - 実装言語は **C11** に固定する。理由: 当時の Therac-25 は PDP-11 アセンブリで実装されたが、本プロジェクトは「現代の C で同等機能を IEC 62304 に従って実装する」学習文脈である。
-- 試験は **CppUTest** を用いる(C コードを C++ の CppUTest から検証。ヘッダは `extern "C"` ガード付き)。
+- 試験は **CppUTest**(既定)または **GoogleTest** を用いる(C コードを C++ の試験フレームワークから検証。ヘッダは `extern "C"` ガード付き)。試験ソースは `tests/test_framework.h` 経由で両フレームワーク共通の単一ソースとし、CMake オプションでフレームワークを選択する。
 - コーディング規約は MISRA C:2012 を第一参考、CERT C を補助とする。コンパイラ厳格警告を **警告ゼロ** で通すことを必須とする。
 - 並行処理は導入しない。Therac-25 の race condition は **単一スレッドの操作順序依存バグ** として状態機械(RCM-001)で教材化する。
 
@@ -157,5 +157,5 @@ cmake -B build -DCMAKE_BUILD_TYPE=Debug && cmake --build build && ctest --test-d
 5. 日付はすべて **`YYYY-MM-DD` 書式** を使用する。
 6. **ドキュメントを新規作成・重大改訂した場合は、必ず `DEVELOPMENT_STEPS.md` を更新する。**
 7. 問題報告 ID は `PRB-NNNN` を使用する。
-8. 実装言語は **C11**、試験は **CppUTest** とする。本番コードにテスト用の条件分岐(`if (test_mode)` 等)を入れない。
+8. 実装言語は **C11**、試験は **CppUTest または GoogleTest**(`TH25S_TEST_FRAMEWORK` で選択)とする。試験ソースは `tests/test_framework.h` 経由の互換マクロ(`TH25S_TEST` / `TH25S_LONGS_EQUAL` 等)を用い、両フレームワークで同一動作するよう書く。本番コードにテスト用の条件分岐(`if (test_mode)` 等)を入れない。
 9. テストは実際の機能を検証する。無意味なアサーション(`CHECK(true)` 等)やテストを通すためだけのハードコードは禁止。正常系・境界値・異常系を網羅する。

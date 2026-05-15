@@ -1,7 +1,9 @@
 name: Build and Unit Test
 
-# TH25S-CORE (C11) を CMake でビルドし、CppUTest によるユニット試験を実行する。
-# UTPR-TH25S-001 §7.1 の試験環境（ホスト・GCC・CppUTest）の CI 上での再現。
+# TH25S-CORE (C11) を CMake でビルドし、CppUTest と GoogleTest の両フレームワーク
+# でユニット試験を実行する (CR-0001 / 2026-05-15)。UTPR-TH25S-001 §7.1 の試験環境の
+# CI 上での再現。両フレームワークで同一の 55 ケースが合格することを CI で機械的に
+# 確認する (test_framework.h 経由の試験ロジック単一ソース)。
 
 on:
   push:
@@ -14,21 +16,21 @@ permissions:
 
 jobs:
   build-test:
-    name: CMake build + CppUTest
+    name: CMake build + CppUTest & GoogleTest
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
 
-      - name: Install toolchain and CppUTest
+      - name: Install toolchain and test frameworks
         run: |
           sudo apt-get update
-          sudo apt-get install -y cmake g++ pkg-config libcpputest-dev
+          sudo apt-get install -y cmake g++ pkg-config libcpputest-dev libgtest-dev
 
-      - name: Configure
-        run: cmake -B build -DCMAKE_BUILD_TYPE=Debug
+      - name: Configure (CppUTest + GoogleTest)
+        run: cmake -B build -DCMAKE_BUILD_TYPE=Debug -DTH25S_TEST_FRAMEWORK=both
 
       - name: Build
         run: cmake --build build --parallel
 
-      - name: Run unit tests
+      - name: Run unit tests (両フレームワーク)
         run: ctest --test-dir build --output-on-failure

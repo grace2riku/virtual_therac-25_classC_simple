@@ -40,7 +40,7 @@ Therac-25 は 1982 年に AECL が開発した放射線治療装置です。1985
 | ソフトウェア名称 | Therac-25 Simple Beam Interlock Software(TH25S-CORE) |
 | ソフトウェア安全クラス | **C**(IEC 62304) |
 | 実装言語 | **C11** |
-| 試験フレームワーク | **CppUTest 4.0**(SOUP-001) |
+| 試験フレームワーク | **CppUTest 4.0**(SOUP-001、既定)または **GoogleTest 1.17.0**(SOUP-002、CR-0001 で追加)を CMake オプションで選択 |
 | ライフサイクルモデル | V 字モデル(単一インクリメント・7 日) |
 | リリースバージョン | 1.0.0 |
 
@@ -86,33 +86,43 @@ ARCH-001  TH25S-CORE 安全コア (libth25s_core.a)
 
 - C11 / C++17 対応のコンパイラ(GCC または Clang)
 - CMake 3.20 以上
-- CppUTest 4.0 と pkg-config
-  - macOS: `brew install cpputest`
-  - Ubuntu/Debian: `sudo apt-get install libcpputest-dev`
+- 試験フレームワーク (どちらか、または両方)
+  - **CppUTest 4.0** + pkg-config — macOS: `brew install cpputest` / Ubuntu/Debian: `sudo apt-get install libcpputest-dev`
+  - **GoogleTest 1.17.0** — macOS: `brew install googletest` / Ubuntu/Debian: `sudo apt-get install libgtest-dev`
 
 ### 手順
 
+試験フレームワークは CMake オプション `TH25S_TEST_FRAMEWORK` で選択します(`cpputest` 既定 / `gtest` / `both`)。
+
 ```bash
-# 製品ライブラリ + 試験のビルド
+# 既定: CppUTest で試験 (TH25S_TEST_FRAMEWORK=cpputest 相当)
 cmake -B build -DCMAKE_BUILD_TYPE=Debug
 cmake --build build
-
-# ユニット・結合・システム試験の実行
 ctest --test-dir build --output-on-failure
 
-# 製品ライブラリのみをビルドする場合(CppUTest 不要)
+# GoogleTest で試験
+cmake -B build-gtest -DCMAKE_BUILD_TYPE=Debug -DTH25S_TEST_FRAMEWORK=gtest
+cmake --build build-gtest
+ctest --test-dir build-gtest --output-on-failure
+
+# 両フレームワークで試験 (CI と同じ設定)
+cmake -B build-both -DCMAKE_BUILD_TYPE=Debug -DTH25S_TEST_FRAMEWORK=both
+cmake --build build-both
+ctest --test-dir build-both --output-on-failure
+
+# 製品ライブラリのみをビルドする場合 (試験フレームワーク不要)
 cmake -B build-lib -DTH25S_BUILD_TESTS=OFF
 cmake --build build-lib
 ```
 
-試験は **55 ケース / 760 チェック** を実行し、全件合格します(UTPR §8.2)。
+試験は **55 ケース / 760 チェック** を実行し、全件合格します(UTPR §8.2)。GoogleTest 版も同一の 55 ケースを実行します(`tests/test_framework.h` 互換層により試験ロジックは単一ソース)。
 
 ## CI(GitHub Actions)
 
 | ワークフロー | 内容 |
 |------------|------|
 | `docs-check.yml` | 必須ディレクトリ・ファイルの存在 / Markdown lint / 内部リンク切れ / 日付書式(ISO 8601) |
-| `build-test.yml` | CMake ビルド + CppUTest によるユニット・結合・システム試験 |
+| `build-test.yml` | CMake ビルド + **CppUTest と GoogleTest 両方** によるユニット・結合・システム試験(`TH25S_TEST_FRAMEWORK=both`) |
 
 ## 関連規格
 
