@@ -74,6 +74,8 @@
 
 成果物ドキュメントの ID プレフィックス: `SDP- / SRS- / SAD- / SDD- / UTPR- / ITPR- / STPR- / SMS- / SMP- / SRMP- / SSC- / SCMP- / CIL- / CCB- / CRR- / RMF- / SPRP- / ACL-`。製品コードは **`TH25S`**(例: SDP-TH25S-001)。
 
+各略語の英語フル・日本語訳・対応文書へのリンクは [README §略語](./README.md#略語本リポジトリで使われる略称の辞書) を正本とする(監査用ミラー: [`compliance/audit_checklist.md §10`](./compliance/audit_checklist.md))。
+
 ## 編集時のガイドライン
 
 ### 記述スタイル

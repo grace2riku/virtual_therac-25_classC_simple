@@ -124,6 +124,74 @@ cmake --build build-lib
 | `docs-check.yml` | 必須ディレクトリ・ファイルの存在 / Markdown lint / 内部リンク切れ / 日付書式(ISO 8601) |
 | `build-test.yml` | CMake ビルド + **CppUTest と GoogleTest 両方** によるユニット・結合・システム試験(`TH25S_TEST_FRAMEWORK=both`) |
 
+## 略語(本リポジトリで使われる略称の辞書)
+
+本プロジェクトの文書全体で頻出する略称を一覧する。**正本はここ(README §略語)** とし、監査用の同一表を [`compliance/audit_checklist.md §10`](./compliance/audit_checklist.md) にもミラーで保持する。
+
+### ドキュメント成果物(IEC 62304 箇条 5〜9 の出力)
+
+| 略語 | 英語フル | 日本語 | 所在 |
+|------|---------|-------|------|
+| SDP | Software Development Plan | ソフトウェア開発計画書 | [`5.1_.../software_development_plan.md`](./5.1_software_development_planning/software_development_plan.md) |
+| SRS | Software Requirements Specification | ソフトウェア要求仕様書 | [`5.2_.../software_requirements_specification.md`](./5.2_software_requirements_analysis/software_requirements_specification.md) |
+| SAD | Software Architecture Description | ソフトウェアアーキテクチャ設計書 | [`5.3_.../software_architecture_design.md`](./5.3_software_architecture_design/software_architecture_design.md) |
+| SDD | Software Design Description | ソフトウェア詳細設計書 | [`5.4_.../software_detailed_design.md`](./5.4_software_detailed_design/software_detailed_design.md) |
+| UTPR | Unit Test Plan and Report | ユニットテスト計画書/報告書 | [`5.5_.../software_unit_test_plan_report.md`](./5.5_software_unit_implementation/software_unit_test_plan_report.md) |
+| ITPR | Integration Test Plan and Report | 結合試験計画書/報告書 | [`5.6_.../software_integration_test_plan_report.md`](./5.6_software_integration_testing/software_integration_test_plan_report.md) |
+| STPR | System Test Plan and Report | システム試験計画書/報告書 | [`5.7_.../software_system_test_plan_report.md`](./5.7_software_system_testing/software_system_test_plan_report.md) |
+| SMS | Software Master Specification | ソフトウェアマスタ仕様書(リリース記録) | [`5.8_.../software_master_specification.md`](./5.8_software_release/software_master_specification.md) |
+| SMP | Software Maintenance Plan | ソフトウェア保守計画書 | [`6_.../software_maintenance_plan.md`](./6_software_maintenance_process/software_maintenance_plan.md) |
+| SRMP | Software Risk Management Plan | ソフトウェアリスクマネジメント計画書 | [`7_.../software_risk_management_plan.md`](./7_software_risk_management_process/software_risk_management_plan.md) |
+| SSC | Software Safety Class Determination Record | ソフトウェア安全クラス決定記録 | [`7_.../software_safety_class_determination_record.md`](./7_software_risk_management_process/software_safety_class_determination_record.md) |
+| RMF | Risk Management File | リスクマネジメントファイル(ISO 14971) | [`7_.../risk_management_file.md`](./7_software_risk_management_process/risk_management_file.md) |
+| SCMP | Software Configuration Management Plan | ソフトウェア構成管理計画書 | [`8_.../software_configuration_management_plan.md`](./8_software_configuration_management_process/software_configuration_management_plan.md) |
+| CIL | Configuration Item List | 構成アイテム一覧 | [`8_.../configuration_item_list.md`](./8_software_configuration_management_process/configuration_item_list.md) |
+| CCB | Change Control Board Operating Rules | 変更管理委員会(CCB)運用規程 | [`8_.../ccb_operating_rules.md`](./8_software_configuration_management_process/ccb_operating_rules.md) |
+| CRR | Change Request Register | 変更要求台帳 | [`8_.../change_request_register.md`](./8_software_configuration_management_process/change_request_register.md) |
+| SPRP | Software Problem Resolution Procedure | ソフトウェア問題解決手順書 | [`9_.../software_problem_resolution_procedure.md`](./9_software_problem_resolution_process/software_problem_resolution_procedure.md) |
+| ACL | Audit Checklist(IEC 62304 適合性) | IEC 62304 監査チェックリスト | [`compliance/audit_checklist.md`](./compliance/audit_checklist.md) |
+
+### トレーサビリティ用の ID プレフィックス
+
+| プレフィックス | 意味 | 例 |
+|--------------|------|-----|
+| `SRS-` | ソフトウェア要求事項 | SRS-001 |
+| `ARCH-` | アーキテクチャ要素(ソフトウェア項目) | ARCH-001 |
+| `SDD-` | 詳細設計項目 | SDD-001 |
+| `UNIT-` | ソフトウェアユニット | UNIT-001 |
+| `IF-U-` | ソフトウェア項目間インタフェース | IF-U-001 |
+| `IF-E-` | ソフトウェア外部インタフェース | IF-E-001 |
+| `UT-` | ユニット試験 | UT-001-01 |
+| `IT-` | 結合試験 | IT-001 |
+| `ST-` | システム試験 | ST-001 |
+| `HZ-` | ハザード(Hazard) | HZ-001 |
+| `RCM-` | リスクコントロール手段(Risk Control Measure) | RCM-001 |
+| `SOUP-` | 素性不明のソフトウェア(Software of Unknown Provenance) | SOUP-001 |
+| `SEP-` | アーキテクチャ分離(Separation、5.3.5 関連) | SEP-001 |
+| `CI-` | 構成アイテム(Configuration Item) | CI-SRC-001 |
+| `PRB-` | 問題報告(Problem Report、`PR-` は使わない) | PRB-0001 |
+| `CR-` | 変更要求(Change Request) | CR-0001 |
+| `ANOM-` | 残留異常(Anomaly) | ANOM-001 |
+| `BL-` | ベースライン(Baseline) | BL-20260515-001 |
+
+### その他の用語・略語
+
+| 略語 | 英語フル | 日本語 |
+|------|---------|-------|
+| SOUP | Software of Unknown Provenance | 素性不明のソフトウェア(供給元・開発履歴が不明なソフト) |
+| HZ | Hazard | ハザード(危害の潜在的源泉) |
+| RCM | Risk Control Measure | リスクコントロール手段 |
+| SEP | Separation | アーキテクチャ分離(クラス C の 5.3.5) |
+| CI | Configuration Item | 構成アイテム |
+| CCB | Change Control Board | 変更管理委員会(運用規程の CCB-とは別概念) |
+| CR | Change Request | 変更要求 |
+| PRB | Problem Report | 問題報告(`PR-` は GitHub PR と衝突するため `PRB-` を使う) |
+| MC/DC | Modified Condition/Decision Coverage | 改良条件分岐網羅 |
+| IEC | International Electrotechnical Commission | 国際電気標準会議 |
+| ISO | International Organization for Standardization | 国際標準化機構 |
+| JIS | Japanese Industrial Standards | 日本産業規格(JIS T 2304 = IEC 62304 の日本版) |
+| TH25S | (本プロジェクトの製品コード) | 仮想 Therac-25 Simple |
+
 ## 関連規格
 
 | 規格 | 用途 |

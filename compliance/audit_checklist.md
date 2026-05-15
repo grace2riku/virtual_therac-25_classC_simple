@@ -1,7 +1,7 @@
 # IEC 62304 監査チェックリスト(クラス C)
 
 **ドキュメント ID:** ACL-TH25S-001
-**バージョン:** 1.2
+**バージョン:** 1.3
 **最終更新日:** 2026-05-15
 **対象規格:** IEC 62304:2006+A1:2015 / JIS T 2304:2017
 **対象製品:** 仮想 Therac-25 Simple / TH25S-SIM-001
@@ -207,25 +207,28 @@
 
 ## 10. 略語
 
-| 略語 | フル |
-|------|------|
-| SDP | Software Development Plan |
-| SRS | Software Requirements Specification |
-| SAD | Software Architecture Description |
-| SDD | Software Design Description |
-| UTPR | Unit Test Plan and Report |
-| ITPR | Integration Test Plan and Report |
-| STPR | System Test Plan and Report |
-| SMS | Software Master Specification |
-| SMP | Software Maintenance Plan |
-| SRMP | Software Risk Management Plan |
-| SSC | Software Safety Class Determination Record |
-| RMF | Risk Management File |
-| SCMP | Software Configuration Management Plan |
-| CIL | Configuration Item List |
-| CRR | Change Request Register |
-| CCB | Change Control Board Operating Rules |
-| SPRP | Software Problem Resolution Procedure |
+> 本表は監査用に自己完結化したもの。同一内容は [`README.md §略語`](../README.md#略語本リポジトリで使われる略称の辞書) に正本として掲載されている(CR-0003 で正本場所を README に統一)。
+
+| 略語 | 英語フル | 日本語 |
+|------|---------|-------|
+| SDP | Software Development Plan | ソフトウェア開発計画書 |
+| SRS | Software Requirements Specification | ソフトウェア要求仕様書 |
+| SAD | Software Architecture Description | ソフトウェアアーキテクチャ設計書 |
+| SDD | Software Design Description | ソフトウェア詳細設計書 |
+| UTPR | Unit Test Plan and Report | ユニットテスト計画書/報告書 |
+| ITPR | Integration Test Plan and Report | 結合試験計画書/報告書 |
+| STPR | System Test Plan and Report | システム試験計画書/報告書 |
+| SMS | Software Master Specification | ソフトウェアマスタ仕様書(リリース記録) |
+| SMP | Software Maintenance Plan | ソフトウェア保守計画書 |
+| SRMP | Software Risk Management Plan | ソフトウェアリスクマネジメント計画書 |
+| SSC | Software Safety Class Determination Record | ソフトウェア安全クラス決定記録 |
+| RMF | Risk Management File | リスクマネジメントファイル(ISO 14971) |
+| SCMP | Software Configuration Management Plan | ソフトウェア構成管理計画書 |
+| CIL | Configuration Item List | 構成アイテム一覧 |
+| CRR | Change Request Register | 変更要求台帳 |
+| CCB | Change Control Board Operating Rules | 変更管理委員会(CCB)運用規程 |
+| SPRP | Software Problem Resolution Procedure | ソフトウェア問題解決手順書 |
+| ACL | Audit Checklist(IEC 62304 適合性) | IEC 62304 監査チェックリスト(本書) |
 
 ## 11. 改訂履歴
 
@@ -234,3 +237,4 @@
 | 1.0 | 2026-05-15 | 初版作成。箇条 4〜9 の全条項と対応文書のマッピングを記録。自己監査で指摘事項なし。 | 開発者A |
 | 1.1 | 2026-05-15 | CR-0001(GoogleTest 追加)後の再確認。全条項の対応文書バージョン更新(SDP/SAD/UTPR/SMS/SRMP/CIL/CRR を 1.1 へ昇格)を反映。条項の状態(✅)は不変、指摘事項なしを維持。 | 開発者A |
 | 1.2 | 2026-05-15 | CR-0002(SOUP-002 GoogleTest 環境別バージョン正確化)後の再確認。条項 5.1.10 / 5.3.3 / 5.3.4 / 7.1.3 / 8.1.2(SOUP 識別関連)が対応文書の正確化により強化された。対応文書バージョン更新(SDP/SAD/UTPR/SMS/SRMP/CIL/CRR を 1.2 へ昇格)を反映。条項の状態(✅)は不変、指摘事項なしを維持。 | 開発者A |
+| 1.3 | 2026-05-15 | CR-0003(略語辞書の充実化)反映: §10 略語表に日本語訳・ACL 自身を追加。正本は README §略語、本書は監査用ミラーである旨を冒頭注記に明示。CRR/CIL/STEPS の 1.3 昇格に伴う再確認、条項状態(✅)・指摘事項なしを維持。 | 開発者A |
