@@ -1,0 +1,18 @@
+# lychee configuration for internal link checking
+# External URL verification is skipped to keep CI deterministic.
+# フラグメント検証 (--include-fragments) とオフライン (--offline) は
+# CI (.github/workflows/docs-check.yml) のコマンドライン引数で指定する。
+
+verbose = "info"
+no_progress = true
+
+exclude_path = [
+  ".git",
+  "node_modules",
+  "build",
+]
+
+# Treat template placeholder URLs as valid (e.g., {{URL}})
+exclude = [
+  '^\{\{.*\}\}$',
+]

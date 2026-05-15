@@ -1,0 +1,27 @@
+# Claude Code session-local scheduled task lock (session-specific, not for sharing)
+.claude/scheduled_tasks.lock
+
+# Claude Code user-local settings (per-developer, not for sharing)
+.claude/settings.local.json
+
+# CMake build outputs (out-of-source builds are expected; keep the source tree clean)
+build/
+build-*/
+cmake-build-*/
+
+# CMake artifacts (safety net against accidental in-source builds)
+CMakeCache.txt
+CMakeFiles/
+cmake_install.cmake
+CTestTestfile.cmake
+compile_commands.json
+Testing/
+Makefile
+
+# Compiled objects / binaries
+*.o
+*.a
+*.out
+
+# OS
+.DS_Store
