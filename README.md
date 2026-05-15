@@ -78,7 +78,9 @@ ARCH-001  TH25S-CORE 安全コア (libth25s_core.a)
 | 9 | ソフトウェア問題解決手順書(SPRP) | [`9_.../software_problem_resolution_procedure.md`](./9_software_problem_resolution_process/software_problem_resolution_procedure.md) |
 | 補助 | IEC 62304 監査チェックリスト(ACL) | [`compliance/audit_checklist.md`](./compliance/audit_checklist.md) |
 
-進め方の手引きは [`DEVELOPMENT_STEPS.md`](./DEVELOPMENT_STEPS.md)(Day1〜Day7 の日割りガイド)を参照してください。
+進め方の手引きは [`DEVELOPMENT_STEPS.md`](./DEVELOPMENT_STEPS.md)(Day1〜Day7 の日割りガイド + Day8〜 保守ステップ実績)を参照してください。
+
+IEC 62304 のプロセス・用語に関する質問と回答の蓄積は [`IEC62304_QA.md`](./IEC62304_QA.md) を参照してください。
 
 ## ビルドと試験
 
@@ -150,6 +152,7 @@ cmake --build build-lib
 | CRR | Change Request Register | 変更要求台帳 | [`8_.../change_request_register.md`](./8_software_configuration_management_process/change_request_register.md) |
 | SPRP | Software Problem Resolution Procedure | ソフトウェア問題解決手順書 | [`9_.../software_problem_resolution_procedure.md`](./9_software_problem_resolution_process/software_problem_resolution_procedure.md) |
 | ACL | Audit Checklist(IEC 62304 適合性) | IEC 62304 監査チェックリスト | [`compliance/audit_checklist.md`](./compliance/audit_checklist.md) |
+| QAR | Q&A Record(学習プロジェクト固有、CR-0004 で追加) | IEC 62304 Q&A 記録(学習過程の質問と回答の蓄積) | [`IEC62304_QA.md`](./IEC62304_QA.md) |
 
 ### トレーサビリティ用の ID プレフィックス
 
@@ -165,6 +168,7 @@ cmake --build build-lib
 | `IT-` | 結合試験 | IT-001 |
 | `ST-` | システム試験 | ST-001 |
 | `HZ-` | ハザード(Hazard) | HZ-001 |
+| `EV-` | 事象シーケンス(Event Sequence、ISO 14971 §5.4) | EV-001 |
 | `RCM-` | リスクコントロール手段(Risk Control Measure) | RCM-001 |
 | `SOUP-` | 素性不明のソフトウェア(Software of Unknown Provenance) | SOUP-001 |
 | `SEP-` | アーキテクチャ分離(Separation、5.3.5 関連) | SEP-001 |
@@ -173,6 +177,7 @@ cmake --build build-lib
 | `CR-` | 変更要求(Change Request) | CR-0001 |
 | `ANOM-` | 残留異常(Anomaly) | ANOM-001 |
 | `BL-` | ベースライン(Baseline) | BL-20260515-001 |
+| `QA-` | Q&A 記録エントリ(学習プロジェクト固有、CR-0004 で追加) | QA-001 |
 
 ### その他の用語・略語
 

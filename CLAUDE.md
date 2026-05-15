@@ -64,6 +64,7 @@
 | システム試験 | `ST-` | ST-001 |
 | リスクコントロール手段 | `RCM-` | RCM-001 |
 | ハザード | `HZ-` | HZ-001 |
+| 事象シーケンス(ISO 14971) | `EV-` | EV-001 |
 | SOUP | `SOUP-` | SOUP-001 |
 | 分離(アーキテクチャ) | `SEP-` | SEP-001 |
 | 構成アイテム | `CI-` | CI-SRC-001 |
@@ -71,8 +72,9 @@
 | 変更要求 | `CR-` | CR-0001 |
 | 残留異常 | `ANOM-` | ANOM-001 |
 | ベースライン | `BL-` | BL-20260515-003 |
+| Q&A 記録エントリ(学習プロジェクト固有、CR-0004 で追加) | `QA-` | QA-001 |
 
-成果物ドキュメントの ID プレフィックス: `SDP- / SRS- / SAD- / SDD- / UTPR- / ITPR- / STPR- / SMS- / SMP- / SRMP- / SSC- / SCMP- / CIL- / CCB- / CRR- / RMF- / SPRP- / ACL-`。製品コードは **`TH25S`**(例: SDP-TH25S-001)。
+成果物ドキュメントの ID プレフィックス: `SDP- / SRS- / SAD- / SDD- / UTPR- / ITPR- / STPR- / SMS- / SMP- / SRMP- / SSC- / SCMP- / CIL- / CCB- / CRR- / RMF- / SPRP- / ACL-` および `QAR-`(Q&A 記録、学習プロジェクト固有、CR-0004 で追加)。製品コードは **`TH25S`**(例: SDP-TH25S-001)。
 
 各略語の英語フル・日本語訳・対応文書へのリンクは [README §略語](./README.md#略語本リポジトリで使われる略称の辞書) を正本とする(監査用ミラー: [`compliance/audit_checklist.md §10`](./compliance/audit_checklist.md))。
 
