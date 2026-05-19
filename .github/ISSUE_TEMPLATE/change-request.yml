@@ -1,0 +1,189 @@
+name: 変更要求 (CR / Change Request)
+description: TH25S-CORE への変更要求を CCB §4.1 準拠で起票します(CR-NNNN として CRR に記録)
+title: "CR-NNNN: "
+labels:
+  - change-request
+body:
+  - type: markdown
+    attributes:
+      value: |
+        # 変更要求(CR)起票
+
+        本テンプレートは [CCB 運用規程 §4.1 起票時の記載項目](https://github.com/grace2riku/virtual_therac-25_classC_simple/blob/main/8_software_configuration_management_process/ccb_operating_rules.md#41-起票時の記載項目) に準拠しています。
+
+        ## 起票前チェック
+
+        - [ ] [CRR §4 CR 台帳](https://github.com/grace2riku/virtual_therac-25_classC_simple/blob/main/8_software_configuration_management_process/change_request_register.md#4-cr-台帳) の末尾を確認し、次の連番を採番した(例: 最終が `CR-0006` なら `CR-0007`)
+        - [ ] 起源が問題報告の場合、関連する PRB-ID(または GitHub Issue 番号)を「関連問題報告」欄に記入
+        - [ ] [CCB §5.2 分類判定の基準](https://github.com/grace2riku/virtual_therac-25_classC_simple/blob/main/8_software_configuration_management_process/ccb_operating_rules.md#52-分類判定の基準) に従い、安全関連性を評価して区分を判定
+        - [ ] タイトル先頭の `CR-NNNN:` を正しい採番に置き換えた
+
+  - type: input
+    id: cr_id
+    attributes:
+      label: CR ID
+      description: "形式: `CR-NNNN`(4 桁連番)。CRR §4 末尾の番号 + 1 で採番。"
+      placeholder: "CR-0007"
+    validations:
+      required: true
+
+  - type: input
+    id: created_date
+    attributes:
+      label: 起票日
+      description: "ISO 8601 形式 `YYYY-MM-DD` で起票当日を入力。"
+      placeholder: "2026-05-20"
+    validations:
+      required: true
+
+  - type: textarea
+    id: target
+    attributes:
+      label: 変更対象(構成アイテム)
+      description: |
+        対象となる構成アイテム(CI ID)とファイルパスを列挙します。複数可。
+        CI ID は [CIL §3〜§8](https://github.com/grace2riku/virtual_therac-25_classC_simple/blob/main/8_software_configuration_management_process/configuration_item_list.md) を参照してください。
+      placeholder: |
+        - CI-DOC-XXX(`<dir>/<file>.md` の §N)
+        - CI-SRC-XXX(`src/...`)
+        - CI-SOUP-XXX(SOUP 名 vX.Y)
+    validations:
+      required: true
+
+  - type: textarea
+    id: reason
+    attributes:
+      label: 変更理由(背景・経緯)
+      description: |
+        変更が必要となった背景・経緯を記載します。問題報告・利用者フィードバック・SOUP 異常情報など、起源を明示してください。
+      placeholder: |
+        例:
+        - 利用者から GitHub Issue #N で X の指摘を受けた(PRB-NNNN)
+        - SOUP-001 の脆弱性公開情報 CVE-XXXX-XXXXX に対応する必要がある
+        - 試験 IT-NNN の不合格(根本原因: ...)に対する是正
+        - 保守要求(リリース後の品質改善計画)
+    validations:
+      required: true
+
+  - type: textarea
+    id: summary
+    attributes:
+      label: 変更概要
+      description: |
+        実施する変更の概要を、第三者が再現可能な粒度で記述します。
+        詳細な技術設計は実装フェーズで PR 本文に記載するため、ここでは「何を、どう変えるか」のレベルで構いません。
+      placeholder: |
+        例:
+        - `compliance/audit_checklist.md` §3 の対応文書列を章タイトル + アンカーリンク化(57 リンク追加)
+        - SOUP-001 のバージョンを 4.0 → 4.1 にアップデートし、関連文書のバージョン記載を更新
+        - UNIT-002 `treatment_sequencer.c` に状態 X の遷移処理を追加
+    validations:
+      required: true
+
+  - type: dropdown
+    id: category
+    attributes:
+      label: 初期重要度区分
+      description: |
+        [CCB §5.1 区分定義](https://github.com/grace2riku/virtual_therac-25_classC_simple/blob/main/8_software_configuration_management_process/ccb_operating_rules.md#51-区分定義) および [§5.2 分類判定の基準](https://github.com/grace2riku/virtual_therac-25_classC_simple/blob/main/8_software_configuration_management_process/ccb_operating_rules.md#52-分類判定の基準) に従い判定してください。
+        **下の「安全関連性チェック」のいずれかに該当する場合は MAJOR(重大)を必須選択してください。**
+      options:
+        - "MINOR(軽微: コメント修正、誤字、文書のみの軽微修正)"
+        - "MODERATE(中程度: 非安全関連機能の修正・追加)"
+        - "MAJOR(重大: 安全関連機能、アーキテクチャ変更、SOUP 変更)"
+    validations:
+      required: true
+
+  - type: input
+    id: related_prb
+    attributes:
+      label: 関連問題報告(PRB-NNNN / GitHub Issue 番号)
+      description: "PRB が起源の場合、または利用者起因の GitHub Issue が起源の場合に記入(任意)。"
+      placeholder: "PRB-0001 / GitHub Issue #N"
+
+  - type: checkboxes
+    id: safety_related
+    attributes:
+      label: 安全関連性チェック(CCB §5.2)
+      description: |
+        以下のいずれかに該当する場合、本 CR は **MAJOR(重大)** 区分必須となり、CCB 正式審議(擬制)+ 24 時間以上の審議インターバル + リスク再評価(SRMP §6)が必要です。
+        該当しない場合はチェックなしで構いません。
+      options:
+        - label: リスクコントロール手段(RCM-001〜004)を実装する CI(UNIT-001〜003)への変更
+        - label: ソフトウェア安全クラスに影響し得る変更
+        - label: 分離設計(SEP-001、SafetyInterlock の論理分離)に影響する変更
+        - label: 外部インタフェース(IF-E-001)の変更
+        - label: SOUP(CppUTest / GoogleTest)の追加・削除・バージョン変更
+
+  - type: textarea
+    id: verification_plan
+    attributes:
+      label: 検証方針
+      description: |
+        [SCMP §4.3 変更の検証](https://github.com/grace2riku/virtual_therac-25_classC_simple/blob/main/8_software_configuration_management_process/software_configuration_management_plan.md#43-変更の検証箇条-823) の規模別最低限の検証に従い記載します。
+      placeholder: |
+        - 軽微(MINOR): 自己レビュー、該当ユニット試験 + 機械的検証(markdownlint / lychee --include-fragments)
+        - 中程度(MODERATE): 上記 + 結合試験 + 該当 RCM 検証
+        - 重大(MAJOR): 上記 + システム試験 + リスク再評価(SRMP §6)+ CCB 完了確認
+    validations:
+      required: true
+
+  - type: textarea
+    id: rollback_plan
+    attributes:
+      label: ロールバック計画
+      description: |
+        変更が問題を引き起こした場合の復旧手順を記載します([CCB §7 審議の観点](https://github.com/grace2riku/virtual_therac-25_classC_simple/blob/main/8_software_configuration_management_process/ccb_operating_rules.md#7-審議の観点) の「ロールバック計画の実施可能性」)。
+      placeholder: |
+        例:
+        - `git revert <merge-commit-sha>` で変更前のベースライン(BL-YYYYMMDD-NNN)へ戻す
+        - 戻し後に CI を再走させて全 55 試験合格を確認
+        - SOUP バージョン変更を伴う場合は、変更前バージョンを CIL §5 から復元
+    validations:
+      required: true
+
+  - type: dropdown
+    id: user_notification
+    attributes:
+      label: ユーザ通知の要否(SMP §4.7 連携)
+      description: |
+        本 CR の影響をリリースノート等で利用者に通知する必要があるか判定します。
+      options:
+        - "不要(製品挙動不変、文書のみの修正)"
+        - "不要(製品挙動不変、試験ツリーの拡張のみ)"
+        - "要(リリースノートに記載)"
+        - "要(個別通知が必要)"
+    validations:
+      required: true
+
+  - type: dropdown
+    id: regulatory_notification
+    attributes:
+      label: 規制当局通知の要否
+      description: |
+        本プロジェクトは学習目的のため通常は「不要」ですが、安全性影響を伴う変更で IEC 62304 §6.2.5 の通知対象に相当する場合は「要」を選択してください。
+      options:
+        - "不要(学習プロジェクト)"
+        - "要(安全性影響あり、IEC 62304 §6.2.5 相当の規制当局報告対象)"
+    validations:
+      required: true
+
+  - type: markdown
+    attributes:
+      value: |
+        ---
+
+        ## 起票後の流れ([CCB §5.3 承認フロー図](https://github.com/grace2riku/virtual_therac-25_classC_simple/blob/main/8_software_configuration_management_process/ccb_operating_rules.md#53-承認フロー図))
+
+        1. 本 Issue を起票後、CRR §4 に CR 行を追加(区分・状態・概要・関連 PRB を反映)
+        2. CCB 承認フローに従って審議(MAJOR は 24 時間以上の審議インターバル後に正式審議擬制)
+        3. 実装はフィーチャブランチ(`docs/issue-N-...` または `feat/issue-N-...`)で行い、PR を通じて統合
+        4. コミットメッセージ・PR 本文に CR ID を含める(例: `docs(CR-0007): ...`、`Closes #N`)
+        5. マージ後、CRR §4 の状態を `CLOSED` に更新し、影響文書のバージョンを昇格、新規ベースライン(BL-YYYYMMDD-NNN)を発行
+
+        ## 参照文書
+
+        - [CCB 運用規程(CCB-TH25S-001)](https://github.com/grace2riku/virtual_therac-25_classC_simple/blob/main/8_software_configuration_management_process/ccb_operating_rules.md)
+        - [構成管理計画書(SCMP-TH25S-001)](https://github.com/grace2riku/virtual_therac-25_classC_simple/blob/main/8_software_configuration_management_process/software_configuration_management_plan.md)
+        - [変更要求台帳(CRR-TH25S-001)](https://github.com/grace2riku/virtual_therac-25_classC_simple/blob/main/8_software_configuration_management_process/change_request_register.md)
+        - [問題解決手順書(SPRP-TH25S-001)](https://github.com/grace2riku/virtual_therac-25_classC_simple/blob/main/9_software_problem_resolution_process/software_problem_resolution_procedure.md)
