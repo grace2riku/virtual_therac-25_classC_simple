@@ -1,7 +1,7 @@
 # 変更要求台帳(CR Register)
 
 **ドキュメント ID:** CRR-TH25S-001
-**バージョン:** 1.8
+**バージョン:** 1.9
 **最終更新日:** 2026-05-20
 **対象製品:** 仮想 Therac-25 Simple / TH25S-SIM-001
 
@@ -60,6 +60,7 @@
 | CR-0006 | 2026-05-20 | 開発者A | MINOR | CLOSED | 利用者からの指摘(GitHub Issue #1)で「`compliance/audit_checklist.md §3` の対応文書列が `SDP §3` のような章番号のみで内容が分かりづらく、当該章への到達性も低い」ことが判明。ACL §3(箇条 5 ソフトウェア開発プロセス、5.1〜5.8 の計 47 行)の対応文書列を「`<略号> §N 章タイトル(箇条 X.Y.Z)`形式 + 該当章へのアンカーリンク」に書き換え、§3 冒頭にも表記ルールの注記を追加した。`§番号` を伴わない補助参照(SRMP / SCMP / CIL / RMF / SPRP の単独参照、`src/th25s_core/` 等)はリンク化していない。対象は ACL §3 のみで、§4〜§7(箇条 6〜9)は本 CR の範囲外(Issue でも箇条 5 のみ指定)。要求事項本体・条項対応関係・状態(✅)・SOUP・実装・RCM への影響なし(CCB §5.2 基準で MINOR)。 | — (Issue #1 で報告。SPRP §3.1 に従い GitHub Issue を市販後フィードバックとして取扱い、PRB 新規採番は行わず CR で対応) | CI-DOC-ACL, CI-DOC-CRR, CI-DOC-CIL, CI-DOC-STEPS | — (文書改善、RCM 影響なし) | `docs/issue-1-acl-correspondence-doc-column` ブランチ | markdownlint 0 エラー / lychee `--offline --include-fragments` 0 エラー(§3 で新規追加した 57 件のアンカーリンクのフラグメント解決を確認) | 2026-05-20 |
 | CR-0007 | 2026-05-20 | 開発者A | MINOR | CLOSED | 利用者からの指摘(GitHub Issue #2)で「CCB 運用規程 §4.1 が参照する『GitHub Issues(変更要求テンプレート)』が実体として存在しない」ことが判明。`.github/ISSUE_TEMPLATE/change-request.yml`(YAML Issue Forms 形式)を新規作成し、CCB §4.1 の必須 6 項目に加えて §5.2 安全関連性チェック・SCMP §4.3 検証方針・§7 ロールバック計画・SMP §4.7 通知要否を起票時に網羅する構造化フォームを実装。CCB §4.1 にテンプレート実体への参照リンクを追加し、双方向トレーサビリティを確立(CCB 1.0 → 1.1)。Issue Forms の `validations.required` を「独立性擬制の第 4 の機械的検証」として CCB §4.1 で位置付け。製品コード `libth25s_core.a`・SOUP・実装・RCM・要求事項本体への影響なし(CCB §5.2 基準で MINOR、文書とプロセス補助テンプレートのみ)。 | — (Issue #2 で報告。SPRP §3.1 に従い GitHub Issue を市販後フィードバックとして取扱い、PRB 新規採番は行わず CR で対応) | CI-DOC-CCB(新規 §4.1 リンク追加で 1.0 → 1.1), CI-DOC-ACL, CI-DOC-CRR, CI-DOC-CIL, CI-DOC-STEPS。新規ファイル `.github/ISSUE_TEMPLATE/change-request.yml` は SCMP §3.3「リポジトリ内で版管理」枠組みで管理(CIL §4 個別登録は見送り) | — (文書 + プロセス補助テンプレートの追加、RCM 影響なし) | `docs/issue-2-cr-issue-template` ブランチ | YAML 構文検証(`python -m yaml`)合格 / markdownlint 0 エラー / lychee `--offline --include-fragments` 0 エラー | 2026-05-20 |
 | CR-0008 | 2026-05-20 | 開発者A | MINOR | CLOSED | 利用者からの要望(GitHub Issue #3)で「README の Therac-25 ハザード(HZ-001/002/003/横断)について、事故発生メカニズムを詳しく図解して解説してほしい」を受領。学習プロジェクト固有の補助教材 `THERAC25_HAZARD_ANALYSIS.md`(文書 ID `HZA-TH25S-001`)を新規作成。HZ-001〜003 + 横断要因の事故発生メカニズムを Mermaid 図解(flowchart / stateDiagram / sequenceDiagram)付きで解説し、各ハザードに「IEC 62304 プロセスでの防止」「本実装の RCM 対応(ソース抜粋付き)」を対応付け。§8 でハザード → SRS → RCM → 実装 → 検証のトレースを明示し、Issue #3 の「ハザードはシステム要求とも考えられる」観点に応えた。README「題材」セクションに解説リンク + §略語に HZA を追加、CLAUDE.md の ID プレフィックスに HZA- を登録。事故記述は Leveson & Turner 1993 に基づく事実関係のみ。製品コード・SOUP・実装・RCM・要求事項本体・既存規格文書(RMF 等)への影響なし(CCB §5.2 基準で MINOR、補助教材の新規追加)。 | — (Issue #3 で報告。SPRP §3.1 に従い GitHub Issue を市販後フィードバックとして取扱い、PRB 新規採番は行わず CR で対応) | CI-DOC-HZA(新規 `THERAC25_HAZARD_ANALYSIS.md` / HZA-TH25S-001 v1.0), CI-DOC-ACL, CI-DOC-CRR, CI-DOC-CIL, CI-DOC-STEPS。平文文書 README.md / CLAUDE.md(バージョン据え置き) | — (補助教材の追加、RCM 影響なし) | `docs/issue-3-therac25-hazard-analysis` ブランチ | markdownlint 0 エラー / lychee `--offline --include-fragments` 0 エラー / Mermaid 構文確認 | 2026-05-20 |
+| CR-0009 | 2026-05-20 | 開発者A | MINOR | CLOSED | 利用者からの要望(GitHub Issue #4)で「QA-002 §5 で言及した統一トレーサビリティマトリクス分離方式について、現在の分散方式(各文書に §トレース列)は変更せず、参考資料として統一マトリクスを作成してほしい」を受領。学習プロジェクト固有の参考資料 `TRACEABILITY_MATRIX.md`(文書 ID `UTM-TH25S-001`)を新規作成。要求駆動(SRS→ARCH→UNIT→UT→IT→ST)・安全駆動(HZ→EV→SRS-RCM→RCM→実装→検証)・RCM 対応の複合マトリクスを各文書(SRS §9 / SAD §11 / SDD §7 / UTPR §10 / ITPR §13 / STPR §11 / RMF §11)から集約し、各セルに出典文書を明記。**本書は派生ビュー(参考資料)であり正本は各文書の分散トレース列である**旨を §1.2 で明示(統一方式を本採用すると正本が逆転する点も解説)。QA-002 §5 に参考実装への参照リンクを追加(QAR 1.1 → 1.2)。Issue #4 の制約どおり既存の各文書 §トレース列は一切変更せず。SOUP・実装・RCM・要求事項本体・トレース内容への影響なし(CCB §5.2 基準で MINOR、参考資料の新規追加)。なお PR #10 レビューで **SRS-004 のシステム試験 ID が SRS §9(ST-004)と STPR §11(ST-001)で食い違う正本間不整合** を検出し、UTM §3 ※1・§6 に注記のうえ **Issue #11** を起票して別 CR で是正することとした(統一ビューが分散方式の隠れた不整合を検出した実例)。 | — (Issue #4 で報告。SPRP §3.1 に従い GitHub Issue を市販後フィードバックとして取扱い、PRB 新規採番は行わず CR で対応。派生検出事項は Issue #11 として起票) | CI-DOC-UTM(新規 `TRACEABILITY_MATRIX.md` / UTM-TH25S-001 v1.0), CI-DOC-QA(QA-002 §5 リンク追加で 1.1 → 1.2), CI-DOC-ACL, CI-DOC-CRR, CI-DOC-CIL, CI-DOC-STEPS。平文文書 README.md / CLAUDE.md(バージョン据え置き) | — (参考資料の追加、RCM 影響なし) | `docs/issue-4-unified-traceability-matrix` ブランチ | markdownlint 0 エラー / lychee `--offline --include-fragments` 0 エラー(統一マトリクス内の各文書アンカーリンク解決を確認) | 2026-05-20 |
 
 > 本台帳は保守プロセス(箇条 6)で発生した変更要求を追記して管理する。CR-0001 は SOUP 追加(CCB §5.2 基準で MAJOR 区分)だが、追加対象が試験フレームワークであり製品リスクコントロール手段への影響はないため、§5 安全関連 CR 抽出には含めない。CCB §5.4 の 24 時間以上インターバルは、本 CR が学習プロジェクトの試験ツリー拡張で患者危害リスクを伴わないことから、議長(開発者A 擬制)判断で短縮した(独立性の代替は CI 両フレームワーク全合格で確保)。
 
@@ -93,13 +94,14 @@
 | CR-0006 | MINOR | ACL §3(箇条 5)の対応文書列を章タイトル + アンカーリンク化(57 件)。SOUP・実装・RCM 影響なし | 不要(文書改善のみ、要求事項本体は不変) | 不要(学習プロジェクト) |
 | CR-0007 | MINOR | GitHub Issue Forms 変更要求テンプレート `.github/ISSUE_TEMPLATE/change-request.yml` を新規作成、CCB §4.1 にテンプレート参照リンクを追加(CCB 1.0 → 1.1)。SOUP・実装・RCM 影響なし | 不要(プロセス補助の追加、製品挙動不変) | 不要(学習プロジェクト) |
 | CR-0008 | MINOR | Therac-25 ハザード解析・事故メカニズム解説 `THERAC25_HAZARD_ANALYSIS.md`(HZA-TH25S-001)を新規作成(Mermaid 図解付き教材)。SOUP・実装・RCM 影響なし | 不要(補助教材の追加、製品挙動不変) | 不要(学習プロジェクト) |
+| CR-0009 | MINOR | 統一トレーサビリティマトリクス `TRACEABILITY_MATRIX.md`(UTM-TH25S-001)を参考資料として新規作成(各文書の §トレース列を集約した派生ビュー)。SOUP・実装・RCM 影響なし | 不要(参考資料の追加、製品挙動不変) | 不要(学習プロジェクト) |
 
 ## 7. 集計・傾向分析(箇条 9.6 連携)
 
 | 期間 | 総 CR | MAJOR | MODERATE | MINOR | 安全関連 | 再発(REOPENED) |
 |------|------|-------|----------|-------|--------|----------------|
 | 2026-05(初回リリースまで) | 0 | 0 | 0 | 0 | 0 | 0 |
-| 2026-05(リリース後 v1.0.0 保守期) | 8 | 1 | 0 | 7 | 0 | 0 |
+| 2026-05(リリース後 v1.0.0 保守期) | 9 | 1 | 0 | 8 | 0 | 0 |
 
 傾向分析結果のフィードバック先: 開発標準(コーディング規約)、試験計画(追加試験ケース)。CR-0001 は試験ツリーの保守(SOUP 追加)であり、製品コード・RCM への影響はない。本 CR は「学習プロジェクトの教材性向上(複数フレームワークでの試験動作確認)」を目的とし、傾向分析上は外乱要因として扱う。
 
@@ -116,3 +118,4 @@
 | 1.6 | 2026-05-20 | CR-0006(MINOR・CLOSED)を §4 に追加(ACL §3 対応文書列の章タイトル + アンカーリンク化)。§6 リリース後保守に CR-0006 行を追加。§7 集計表をリリース後保守期 6 件・MINOR 5 件に更新。 | 開発者A |
 | 1.7 | 2026-05-20 | CR-0007(MINOR・CLOSED)を §4 に追加(GitHub Issue Forms 変更要求テンプレートの新規作成、CCB §4.1 リンク追加)。§6 リリース後保守に CR-0007 行を追加。§7 集計表をリリース後保守期 7 件・MINOR 6 件に更新。 | 開発者A |
 | 1.8 | 2026-05-20 | CR-0008(MINOR・CLOSED)を §4 に追加(Therac-25 ハザード解析・事故メカニズム解説 HZA-TH25S-001 の新規作成)。§6 リリース後保守に CR-0008 行を追加。§7 集計表をリリース後保守期 8 件・MINOR 7 件に更新。 | 開発者A |
+| 1.9 | 2026-05-20 | CR-0009(MINOR・CLOSED)を §4 に追加(統一トレーサビリティマトリクス UTM-TH25S-001 の参考資料新規作成)。§6 リリース後保守に CR-0009 行を追加。§7 集計表をリリース後保守期 9 件・MINOR 8 件に更新。 | 開発者A |
