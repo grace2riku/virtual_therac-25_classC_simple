@@ -1,17 +1,17 @@
 # ソフトウェア詳細設計書(SDD)
 
 **ドキュメント ID:** SDD-TH25S-001
-**バージョン:** 1.0
-**作成日:** 2026-05-12
+**バージョン:** 1.1
+**作成日:** 2026-05-12(初版)/ 2026-05-20(v1.1 改訂)
 **対象製品:** 仮想 Therac-25 Simple / TH25S-SIM-001
 **対象ソフトウェアバージョン:** 1.0.0
 **安全クラス:** C(IEC 62304)
 
 | 役割 | 氏名 | 所属 | 日付 | 署名 |
 |------|------|------|------|------|
-| 作成者 | 開発者A(全ロール兼任) | 学習プロジェクト | 2026-05-12 | — |
-| レビュー者 | 開発者A(全ロール兼任) | 学習プロジェクト | 2026-05-12 | — |
-| 承認者 | 開発者A(全ロール兼任) | 学習プロジェクト | 2026-05-12 | — |
+| 作成者 | 開発者A(全ロール兼任) | 学習プロジェクト | 2026-05-20 | — |
+| レビュー者 | 開発者A(全ロール兼任) | 学習プロジェクト | 2026-05-20 | — |
+| 承認者 | 開発者A(全ロール兼任) | 学習プロジェクト | 2026-05-20 | — |
 
 ---
 
@@ -113,19 +113,32 @@ th25s_safe_counter_increment(counter):
 | `th25s_sequencer_t` | struct | state, rx(処方), turntable, consistency_checks(飽和カウンタ) |
 
 #### 状態遷移図
+
+```mermaid
+stateDiagram-v2
+    [*] --> IDLE: seq_init
+    IDLE --> MODE_SELECTED: select_mode
+    MODE_SELECTED --> PRESCRIPTION_SET: set_prescription
+    PRESCRIPTION_SET --> TURNTABLE_CONFIRMED: confirm_turntable
+    TURNTABLE_CONFIRMED --> READY: request_ready
+    READY --> BEAM_ON: request_beam_on で合格
+    READY --> FAULT: request_beam_on で不合格
+    MODE_SELECTED --> MODE_SELECTED: select_mode で再選択リセット
+    PRESCRIPTION_SET --> MODE_SELECTED: select_mode で再選択リセット
+    TURNTABLE_CONFIRMED --> MODE_SELECTED: select_mode で再選択リセット
+    READY --> MODE_SELECTED: select_mode で再選択リセット
+    BEAM_ON --> IDLE: abort
+    FAULT --> IDLE: abort
 ```
-  IDLE ──select_mode──▶ MODE_SELECTED ──set_prescription──▶ PRESCRIPTION_SET
-                            ▲                                     │
-                            │                              confirm_turntable
-            select_mode(再選択でリセット ＝ RCM-001)               │
-                            │                                     ▼
-   READY ◀──request_ready── TURNTABLE_CONFIRMED ◀───────────────────┘
-     │
-     │ request_beam_on:  カウンタ+1 → SafetyInterlock 判定
-     ├─ OK ────────▶ BEAM_ON
-     └─ NG / overflow ─▶ FAULT
-  abort: 任意状態 ──▶ IDLE   /   FAULT: abort 以外を拒否
-```
+
+**図の読み方:** 角丸ボックスが **状態**(`th25s_seq_state_t` の値)、矢印上のラベルが **イベント(トリガ = 公開 API の呼び出し)** を表す。
+
+- **状態(7 種):** `IDLE` / `MODE_SELECTED` / `PRESCRIPTION_SET` / `TURNTABLE_CONFIRMED` / `READY` / `BEAM_ON` / `FAULT`
+- **イベント(トリガ):** `seq_init` / `select_mode` / `set_prescription` / `confirm_turntable` / `request_ready` / `request_beam_on` / `abort`
+- **`request_beam_on`** は内部で「整合性チェックカウンタ +1 → SafetyInterlock 判定」を実行し、**合格なら `BEAM_ON`**、**不合格(整合性違反)またはカウンタオーバーフローなら `FAULT`** へ遷移する。
+- **`select_mode`(再選択リセット = RCM-001):** `MODE_SELECTED` / `PRESCRIPTION_SET` / `TURNTABLE_CONFIRMED` / `READY` のいずれからでも呼び出すと、処方・ターンテーブル確定を破棄して `MODE_SELECTED` へ戻す。`BEAM_ON` / `FAULT` 中は `SEQUENCE_VIOLATION` で拒否(詳細は下記注記)。
+- **`abort`** は任意の状態から `IDLE` へ遷移する(図では代表として `BEAM_ON` / `FAULT` からの遷移を表示)。
+- **`FAULT`** は `abort` 以外の操作を拒否する(`SEQUENCE_VIOLATION`)。
 
 > **RCM-001 の中核:** `select_mode` は IDLE〜READY のいずれからも呼び出せ、呼び出すと処方・ターンテーブル確定をすべて破棄し MODE_SELECTED へ戻す。これにより「設定完了後にモードを編集すると古い機構状態が引き継がれる」という Therac-25 型の操作順序依存バグを、状態機械の構造で成立不能にする。
 
@@ -226,3 +239,4 @@ th25s_interlock_check_beam_on(in):
 | バージョン | 日付 | 変更内容 | 変更者 |
 |----------|------|---------|--------|
 | 1.0 | 2026-05-12 | 初版作成。UNIT-001〜003 の詳細設計、IF 詳細設計、検証記録を定義。 | 開発者A |
+| 1.1 | 2026-05-20 | CR-0010 反映: §4 UNIT-002 の状態遷移図を ASCII から Mermaid `stateDiagram-v2` に変更し、「状態(角丸ボックス)とイベント(矢印ラベル)」の読み方凡例を追加(Issue #5: 状態とトリガの区別が不明瞭だった点を是正)。状態機械のロジック・遷移・RCM-001 注記は不変(表現形式のみの改善)。 | 開発者A |
