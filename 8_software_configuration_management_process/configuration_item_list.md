@@ -1,7 +1,7 @@
 # 構成アイテム一覧(CI List)
 
 **ドキュメント ID:** CIL-TH25S-001
-**バージョン:** 1.12
+**バージョン:** 1.13
 **最終更新日:** 2026-05-20
 **対象製品:** 仮想 Therac-25 Simple / TH25S-SIM-001
 **対象リリース:** 1.0.0
@@ -49,16 +49,17 @@
 | CI-DOC-RMF | リスクマネジメントファイル(ISO 14971) | `7_software_risk_management_process/` | 1.1 | 承認済(CR-0004 で 1.1 へ昇格、§4.2 に EV-NNN ラベル定義を追加) |
 | CI-DOC-SCMP | ソフトウェア構成管理計画書 | `8_software_configuration_management_process/` | 1.0 | 承認済 |
 | CI-DOC-CCB | CCB 運用規程 | `8_software_configuration_management_process/` | 1.1 | 承認済(CR-0007 で 1.1 へ昇格、§4.1 に変更要求テンプレート参照リンクを追加) |
-| CI-DOC-CRR | 変更要求台帳 | `8_software_configuration_management_process/` | 1.12 | 承認済(CR-0001 で 1.1、CR-0002 で 1.2、CR-0003 で 1.3、CR-0004 で 1.4、CR-0005 で 1.5、CR-0006 で 1.6、CR-0007 で 1.7、CR-0008 で 1.8、CR-0009 で 1.9、CR-0010 で 1.10、CR-0011 で 1.11、CR-0012 で 1.12 へ昇格) |
-| CI-DOC-CIL | 構成アイテム一覧(本書、自己参照) | `8_software_configuration_management_process/` | 1.12 | 承認済(CR-0001 で 1.1、CR-0002 で 1.2、CR-0003 で 1.3、CR-0004 で 1.4、CR-0005 で 1.5、CR-0006 で 1.6、CR-0007 で 1.7、CR-0008 で 1.8、CR-0009 で 1.9、CR-0010 で 1.10、CR-0011 で 1.11、CR-0012 で 1.12 へ昇格) |
+| CI-DOC-CRR | 変更要求台帳 | `8_software_configuration_management_process/` | 1.13 | 承認済(CR-0001 で 1.1、CR-0002 で 1.2、CR-0003 で 1.3、CR-0004 で 1.4、CR-0005 で 1.5、CR-0006 で 1.6、CR-0007 で 1.7、CR-0008 で 1.8、CR-0009 で 1.9、CR-0010 で 1.10、CR-0011 で 1.11、CR-0012 で 1.12、CR-0013 で 1.13 へ昇格) |
+| CI-DOC-CIL | 構成アイテム一覧(本書、自己参照) | `8_software_configuration_management_process/` | 1.13 | 承認済(CR-0001 で 1.1、CR-0002 で 1.2、CR-0003 で 1.3、CR-0004 で 1.4、CR-0005 で 1.5、CR-0006 で 1.6、CR-0007 で 1.7、CR-0008 で 1.8、CR-0009 で 1.9、CR-0010 で 1.10、CR-0011 で 1.11、CR-0012 で 1.12、CR-0013 で 1.13 へ昇格) |
 | CI-DOC-SPRP | ソフトウェア問題解決手順書 | `9_software_problem_resolution_process/` | 1.0 | 承認済 |
-| CI-DOC-ACL | IEC 62304 監査チェックリスト | `compliance/` | 1.12 | 承認済(CR-0001 で 1.1、CR-0002 で 1.2、CR-0003 で 1.3、CR-0004 で 1.4、CR-0005 で 1.5、CR-0006 で 1.6、CR-0007 で 1.7、CR-0008 で 1.8、CR-0009 で 1.9、CR-0010 で 1.10、CR-0011 で 1.11、CR-0012 で 1.12 へ昇格、§3 対応文書列を章タイトル + アンカーリンク化) |
+| CI-DOC-ACL | IEC 62304 監査チェックリスト | `compliance/` | 1.13 | 承認済(CR-0001 で 1.1、CR-0002 で 1.2、CR-0003 で 1.3、CR-0004 で 1.4、CR-0005 で 1.5、CR-0006 で 1.6、CR-0007 で 1.7、CR-0008 で 1.8、CR-0009 で 1.9、CR-0010 で 1.10、CR-0011 で 1.11、CR-0012 で 1.12、CR-0013 で 1.13 へ昇格、§3 対応文書列を章タイトル + アンカーリンク化) |
 | CI-DOC-CLAUDE | プロジェクト指示(CLAUDE.md) | `CLAUDE.md` | 1.0 | 承認済 |
 | CI-DOC-README | プロジェクト概要(README.md) | `README.md` | 1.0 | 承認済 |
-| CI-DOC-STEPS | 開発ステップ記録 / 日割りガイド | `DEVELOPMENT_STEPS.md` | 1.12 | 承認済(CR-0001 で 1.1、CR-0002 で 1.2、CR-0003 で 1.3、CR-0004 で 1.4、CR-0005 で 1.5、CR-0006 で 1.6、CR-0007 で 1.7、CR-0008 で 1.8、CR-0009 で 1.9、CR-0010 で 1.10、CR-0011 で 1.11、CR-0012 で 1.12 へ昇格) |
+| CI-DOC-STEPS | 開発ステップ記録 / 日割りガイド | `DEVELOPMENT_STEPS.md` | 1.13 | 承認済(CR-0001 で 1.1、CR-0002 で 1.2、CR-0003 で 1.3、CR-0004 で 1.4、CR-0005 で 1.5、CR-0006 で 1.6、CR-0007 で 1.7、CR-0008 で 1.8、CR-0009 で 1.9、CR-0010 で 1.10、CR-0011 で 1.11、CR-0012 で 1.12、CR-0013 で 1.13 へ昇格) |
 | CI-DOC-QA | IEC 62304 Q&A 記録(学習プロジェクト固有、CR-0004 で新設) | `IEC62304_QA.md`(文書 ID `QAR-TH25S-001`) | 1.2 | 承認済(CR-0005 で 1.1、CR-0009 で 1.2 へ昇格、QA-002 §5 に統一マトリクス参照リンク追加) |
 | CI-DOC-HZA | Therac-25 ハザード解析・事故メカニズム解説(学習プロジェクト固有、CR-0008 で新設) | `THERAC25_HAZARD_ANALYSIS.md`(文書 ID `HZA-TH25S-001`) | 1.0 | 承認済(CR-0008 で新設、HZ-001〜003 + 横断要因の Mermaid 図解付き解説) |
 | CI-DOC-UTM | 統一トレーサビリティマトリクス(学習プロジェクト固有、CR-0009 で新設) | `TRACEABILITY_MATRIX.md`(文書 ID `UTM-TH25S-001`) | 1.1 | 承認済(CR-0009 で新設、CR-0012 で 1.1 へ昇格(SRS-004 不整合の是正反映)。各文書の §トレース列を集約した参考ビュー。正本は各文書) |
+| CI-DOC-ONB | リリース後保守ワークフロー オンボーディングガイド(学習プロジェクト固有、CR-0013 で新設) | `ONBOARDING.md`(文書 ID `ONB-TH25S-001`) | 1.0 | 承認済(CR-0013 で新設、CR-0006〜0012 の実績に基づく保守手順) |
 
 ## 5. SOUP(Software of Unknown Provenance)
 
@@ -114,6 +115,7 @@
 | BL-20260520-013 | 2026-05-20 | 詳細設計の図表現改善(SDD §4 UNIT-002 状態遷移図を Mermaid stateDiagram-v2 へ変更、SDD 1.0 → 1.1) | 開発者A | CR-0010 |
 | BL-20260520-014 | 2026-05-20 | 詳細設計の説明補強(SDD §4 UNIT-001/002/003 に「関数の責務と引数」小節を追加、SDD 1.1 → 1.2) | 開発者A | CR-0011 |
 | BL-20260520-015 | 2026-05-20 | トレーサビリティ是正(SRS-004 のシステム試験を ST-001 に統一。SRS §9 1.1→1.2 / STPR §8 1.0→1.1 / UTM 1.0→1.1) | 開発者A | CR-0012 |
+| BL-20260520-016 | 2026-05-20 | プロセス補助文書整備(リリース後保守ワークフロー オンボーディングガイド `ONBOARDING.md` / ONB-TH25S-001 v1.0 新規作成、CR-0006〜0012 の実績に基づく手順書) | 開発者A | CR-0013 |
 
 ## 10. 改訂履歴
 
@@ -132,6 +134,7 @@
 | 1.10 | 2026-05-20 | CR-0010 反映: §4 の CI-DOC-SDD を 1.0 → 1.1 へ更新(§4 UNIT-002 状態遷移図を Mermaid 化)。CRR/CIL/ACL/STEPS を 1.10 へ昇格に同期。§9 にベースライン BL-20260520-013 を追加。§10 自己参照を 1.10 へ昇格。SOUP・ソースコード・試験資産・SDP/SRS/SAD/UTPR/ITPR/STPR/SMS/SMP/SRMP/SSC/RMF/SCMP/CCB/SPRP/QA/HZA/UTM/README/CLAUDE は不変。 | 開発者A |
 | 1.11 | 2026-05-20 | CR-0011 反映: §4 の CI-DOC-SDD を 1.1 → 1.2 へ更新(§4 UNIT-001/002/003 に関数責務小節を追加)。CRR/CIL/ACL/STEPS を 1.11 へ昇格に同期。§9 にベースライン BL-20260520-014 を追加。§10 自己参照を 1.11 へ昇格。SOUP・ソースコード・試験資産・SDP/SRS/SAD/UTPR/ITPR/STPR/SMS/SMP/SRMP/SSC/RMF/SCMP/CCB/SPRP/QA/HZA/UTM/README/CLAUDE は不変。 | 開発者A |
 | 1.12 | 2026-05-20 | CR-0012 反映: §4 の CI-DOC-SRS を 1.1 → 1.2(§9 SRS-004 を ST-001 に是正)、CI-DOC-STPR を 1.0 → 1.1(§8 ST-001 カバー要求に SRS-004 補完)、CI-DOC-UTM を 1.0 → 1.1(注記是正)へ更新。CRR/CIL/ACL/STEPS を 1.12 へ昇格に同期。§9 にベースライン BL-20260520-015 を追加。§10 自己参照を 1.12 へ昇格。SOUP・ソースコード・試験資産・要求/試験の実体・SDP/SAD/SDD/UTPR/ITPR/SMS/SMP/SRMP/SSC/RMF/SCMP/CCB/SPRP/QA/HZA/README/CLAUDE は不変。 | 開発者A |
+| 1.13 | 2026-05-20 | CR-0013 反映: §4 に CI-DOC-ONB(`ONBOARDING.md` / ONB-TH25S-001 v1.0、新設)を追加。CRR/CIL/ACL/STEPS を 1.13 へ昇格に同期。§9 にベースライン BL-20260520-016 を追加。§10 自己参照を 1.13 へ昇格。SOUP・ソースコード・試験資産・要求/試験の実体・SDP/SRS/SAD/SDD/UTPR/ITPR/STPR/SMS/SMP/SRMP/SSC/RMF/SCMP/CCB/SPRP/QA/HZA/UTM/README/CLAUDE は不変。 | 開発者A |
 
 ## 付録 A: CIL 更新時チェックリスト
 
