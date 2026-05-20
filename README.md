@@ -156,6 +156,7 @@ cmake --build build-lib
 | ACL | Audit Checklist(IEC 62304 適合性) | IEC 62304 監査チェックリスト | [`compliance/audit_checklist.md`](./compliance/audit_checklist.md) |
 | QAR | Q&A Record(学習プロジェクト固有、CR-0004 で追加) | IEC 62304 Q&A 記録(学習過程の質問と回答の蓄積) | [`IEC62304_QA.md`](./IEC62304_QA.md) |
 | HZA | Hazard Analysis(学習プロジェクト固有、CR-0008 で追加) | Therac-25 ハザード解析・事故メカニズム解説(図解付き教材) | [`THERAC25_HAZARD_ANALYSIS.md`](./THERAC25_HAZARD_ANALYSIS.md) |
+| UTM | Unified Traceability Matrix(学習プロジェクト固有、CR-0009 で追加) | 統一トレーサビリティマトリクス(各文書の §トレース列を集約した参考ビュー。正本は各文書) | [`TRACEABILITY_MATRIX.md`](./TRACEABILITY_MATRIX.md) |
 
 ### トレーサビリティ用の ID プレフィックス
 
