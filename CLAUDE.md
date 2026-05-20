@@ -74,7 +74,7 @@
 | ベースライン | `BL-` | BL-20260515-003 |
 | Q&A 記録エントリ(学習プロジェクト固有、CR-0004 で追加) | `QA-` | QA-001 |
 
-成果物ドキュメントの ID プレフィックス: `SDP- / SRS- / SAD- / SDD- / UTPR- / ITPR- / STPR- / SMS- / SMP- / SRMP- / SSC- / SCMP- / CIL- / CCB- / CRR- / RMF- / SPRP- / ACL-`、`QAR-`(Q&A 記録、学習プロジェクト固有、CR-0004 で追加)、`HZA-`(ハザード解析解説、学習プロジェクト固有、CR-0008 で追加)および `UTM-`(統一トレーサビリティマトリクス、学習プロジェクト固有、CR-0009 で追加)。製品コードは **`TH25S`**(例: SDP-TH25S-001)。
+成果物ドキュメントの ID プレフィックス: `SDP- / SRS- / SAD- / SDD- / UTPR- / ITPR- / STPR- / SMS- / SMP- / SRMP- / SSC- / SCMP- / CIL- / CCB- / CRR- / RMF- / SPRP- / ACL-`、`QAR-`(Q&A 記録、学習プロジェクト固有、CR-0004 で追加)、`HZA-`(ハザード解析解説、学習プロジェクト固有、CR-0008 で追加)、`UTM-`(統一トレーサビリティマトリクス、学習プロジェクト固有、CR-0009 で追加)および `ONB-`(オンボーディングガイド、学習プロジェクト固有、CR-0013 で追加)。製品コードは **`TH25S`**(例: SDP-TH25S-001)。
 
 各略語の英語フル・日本語訳・対応文書へのリンクは [README §略語](./README.md#略語本リポジトリで使われる略称の辞書) を正本とする(監査用ミラー: [`compliance/audit_checklist.md §10`](./compliance/audit_checklist.md))。
 
