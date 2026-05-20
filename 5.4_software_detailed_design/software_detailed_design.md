@@ -1,8 +1,8 @@
 # ソフトウェア詳細設計書(SDD)
 
 **ドキュメント ID:** SDD-TH25S-001
-**バージョン:** 1.1
-**作成日:** 2026-05-12(初版)/ 2026-05-20(v1.1 改訂)
+**バージョン:** 1.2
+**作成日:** 2026-05-12(初版)/ 2026-05-20(v1.1・v1.2 改訂)
 **対象製品:** 仮想 Therac-25 Simple / TH25S-SIM-001
 **対象ソフトウェアバージョン:** 1.0.0
 **安全クラス:** C(IEC 62304)
@@ -60,6 +60,30 @@ ARCH-001  TH25S-CORE 安全コア
 | `th25s_safe_counter_increment` | `th25s_safe_counter_t *counter` | `th25s_error_t` | なし | NULL は NULL_ARG。value<limit なら +1 して OK。value>=limit なら値を保持し overflowed=true、COUNTER_OVERFLOW を返す |
 | `th25s_safe_counter_is_valid` | `const th25s_safe_counter_t *counter` | `bool` | なし | NULL または overflowed なら false、それ以外 true |
 
+#### 関数の責務と引数
+
+各関数の役割(責務)と引数・戻り値の意味を示す(`common_types.h` の関数コメントと整合)。
+
+- **`th25s_error_message`** — エラーコードを人間可読の日本語メッセージ文字列に変換する(RCM-004: 暗号的エラー表示の排除)。
+  - `code`: 変換対象のエラーコード。
+  - 戻り値: 対応する説明文字列(**非 NULL 保証**。未定義コードは既定の「未定義のエラーコード」)。
+- **`th25s_validate_energy`** — 治療モードに応じたエネルギ許容範囲を検証する(SRS-005)。許容範囲はモードで異なる。
+  - `mode`: 治療モード(電子 / X線)。
+  - `energy`: 検証対象のエネルギ値(電子モードは MeV、X線モードは MV)。
+  - 戻り値: 範囲内なら `TH25S_OK`、範囲外は `ENERGY_OUT_OF_RANGE`、`NONE` は `MODE_NONE`。
+- **`th25s_validate_dose`** — 線量が許容範囲内かを検証する(SRS-008)。
+  - `dose_cgy`: 検証対象の線量(cGy 単位)。
+  - 戻り値: 範囲内なら `TH25S_OK`、範囲外は `DOSE_OUT_OF_RANGE`。
+- **`th25s_safe_counter_init`** — 飽和カウンタを初期値(value=0)に初期化する。使用前に必ず呼ぶ。
+  - `counter`: 初期化対象のカウンタ(NULL なら何もしない)。
+  - `limit`: カウンタの上限値(これ以上は飽和してオーバーフロー扱い)。
+- **`th25s_safe_counter_increment`** — 飽和カウンタを 1 増やす。上限到達時は 0 へ巻き戻さずオーバーフロー扱いにする(RCM-003: HZ-003 のカウンタ巻き戻りバイパスを構造的に排除)。
+  - `counter`: 対象カウンタ。
+  - 戻り値: 成功で `TH25S_OK`、NULL で `NULL_ARG`、上限到達で値を保持し `COUNTER_OVERFLOW`。
+- **`th25s_safe_counter_is_valid`** — カウンタがオーバーフローしておらず安全に使える状態かを返す。
+  - `counter`: 対象カウンタ。
+  - 戻り値: 未オーバーフローで `true`、NULL またはオーバーフロー済みで `false`。
+
 #### データ構造
 | 名称 | 型 | 値域 | 意味 |
 |------|---|------|------|
@@ -105,6 +129,36 @@ th25s_safe_counter_increment(counter):
 | `th25s_seq_request_ready` | `th25s_sequencer_t *seq` | `th25s_error_t` | state=TURNTABLE_CONFIRMED | state=READY。違反は SEQUENCE_VIOLATION |
 | `th25s_seq_request_beam_on` | `th25s_sequencer_t *seq` | `th25s_error_t` | state=READY | カウンタ +1 → UNIT-003 判定 → OK なら BEAM_ON。違反/不合格は FAULT へ遷移し対応エラー |
 | `th25s_seq_abort` | `th25s_sequencer_t *seq` | `void` | なし | state=IDLE、処方クリア。カウンタは生涯値として保持 |
+
+#### 関数の責務と引数
+
+各関数の役割(責務)と引数・戻り値の意味を示す(`treatment_sequencer.h` の関数コメントと整合)。本ユニットは「操作を受け付ける窓口」であると同時に、状態機械により**操作順序そのものを安全機構として機能させる**(RCM-001)。
+
+- **`th25s_seq_init`** — 治療シーケンサを初期状態(IDLE)にする。1 件の治療を始める前に必ず呼ぶ。
+  - `seq`: 初期化対象のシーケンサ。
+- **`th25s_seq_state`** — シーケンサの現在の状態を取得する(試験や UI 表示のための観測手段)。
+  - `seq`: 対象シーケンサ。NULL の場合は安全側に倒して `FAULT` を返す。
+  - 戻り値: 現在の状態。
+- **`th25s_seq_select_mode`** — 治療モードを選択する。**RCM-001 の中核**: IDLE〜READY のどこから呼んでも処方・ターンテーブル確定を破棄して MODE_SELECTED へ戻し、「モード編集後に古い機構状態のままビームオン」(Therac-25 型バグ)を構造的に防ぐ。
+  - `seq`: 対象シーケンサ。
+  - `mode`: 選択する治療モード(電子 / X線。`NONE` は `MODE_NONE` で拒否)。
+  - 戻り値: 成功で `TH25S_OK`、BEAM_ON / FAULT 中は `SEQUENCE_VIOLATION`。
+- **`th25s_seq_set_prescription`** — 処方(エネルギ・線量)を設定する。MODE_SELECTED 状態でのみ許可。
+  - `seq`: 対象シーケンサ。
+  - `rx`: 設定する処方(モード・エネルギ・線量)。`rx.mode` は選択済みモードと一致必須。
+  - 戻り値: 成功で `TH25S_OK`、状態違反・モード不一致は `SEQUENCE_VIOLATION`、範囲外は `OUT_OF_RANGE`。
+- **`th25s_seq_confirm_turntable`** — 操作者が設定したターンテーブル位置を確定・記録する。PRESCRIPTION_SET 状態でのみ許可。**モードとの整合判定はここでは行わず**、ビームオン時に UNIT-003 が独立判定する(多重防御。誤った位置を確定しても最終段で拒否される)。
+  - `seq`: 対象シーケンサ。
+  - `pos`: 確定するターンテーブル位置(`UNKNOWN` は `TURNTABLE_NOT_CONFIRMED` で拒否)。
+  - 戻り値: 成功で `TH25S_OK`、状態違反は `SEQUENCE_VIOLATION`。
+- **`th25s_seq_request_ready`** — ビームオン要求を受け付け可能な READY 状態へ遷移する。TURNTABLE_CONFIRMED 状態でのみ許可。
+  - `seq`: 対象シーケンサ。
+  - 戻り値: 成功で `TH25S_OK`、状態違反は `SEQUENCE_VIOLATION`。
+- **`th25s_seq_request_beam_on`** — ビームオンを要求する。READY 状態でのみ許可。整合性チェックカウンタを +1(オーバーフロー時は FAULT へ遷移 = RCM-003)し、UNIT-003 SafetyInterlock による最終整合性判定(RCM-002)を行い、**合格時のみ** BEAM_ON へ遷移する。
+  - `seq`: 対象シーケンサ。
+  - 戻り値: 合格で `TH25S_OK`(BEAM_ON へ)、状態違反・判定不合格・カウンタオーバーフローは FAULT へ遷移し対応エラー。
+- **`th25s_seq_abort`** — どの状態からでも治療を中止し IDLE へ戻す。整合性チェックカウンタは**機器の生涯累積値として保持**する(治療ごとにリセットしない)。
+  - `seq`: 対象シーケンサ。
 
 #### データ構造
 | 名称 | 型 | 意味 |
@@ -161,6 +215,14 @@ stateDiagram-v2
 | 関数 | 引数 | 戻り値 | 事前条件 | 事後条件 / エラー処理 |
 |------|------|-------|---------|----------------------|
 | `th25s_interlock_check_beam_on` | `const th25s_interlock_input_t *in` | `th25s_error_t` | なし(in の NULL は内部で処理) | 全整合なら OK。不整合は最初に検出したエラーを返す |
+
+#### 関数の責務と引数
+
+各関数の役割(責務)と引数・戻り値の意味を示す(`safety_interlock.h` の関数コメントと整合)。
+
+- **`th25s_interlock_check_beam_on`** — ビーム照射可否を、TreatmentSequencer から論理分離された独立判定として最終確認する**純関数**(RCM-002、HZ-001 の中核防御、SEP-001)。モード未選択でないこと・エネルギ/線量の範囲・モードとターンテーブル位置の整合をすべて確認し、不整合が複数ある場合は**最初に検出したもの**に対応するエラーを返す。可変状態を一切持たないため、同一入力に対し常に同一結果を返す。
+  - `in`: 判定に必要な全情報(モード・エネルギ・線量・ターンテーブル位置)を持つ入力構造体。**Sequencer の内部構造体には依存しない**(SEP-001 分離の要)。NULL は内部で `NULL_ARG` として処理。
+  - 戻り値: 全整合なら `TH25S_OK`、不整合は対応エラー(`MODE_NONE` / `ENERGY_OUT_OF_RANGE` / `DOSE_OUT_OF_RANGE` / `MODE_TURNTABLE_MISMATCH`)。
 
 #### データ構造
 | 名称 | 型 | 意味 |
@@ -240,3 +302,4 @@ th25s_interlock_check_beam_on(in):
 |----------|------|---------|--------|
 | 1.0 | 2026-05-12 | 初版作成。UNIT-001〜003 の詳細設計、IF 詳細設計、検証記録を定義。 | 開発者A |
 | 1.1 | 2026-05-20 | CR-0010 反映: §4 UNIT-002 の状態遷移図を ASCII から Mermaid `stateDiagram-v2` に変更し、「状態(角丸ボックス)とイベント(矢印ラベル)」の読み方凡例を追加(Issue #5: 状態とトリガの区別が不明瞭だった点を是正)。状態機械のロジック・遷移・RCM-001 注記は不変(表現形式のみの改善)。 | 開発者A |
+| 1.2 | 2026-05-20 | CR-0011 反映: §4 UNIT-001/002/003 の各公開 API 表の直後に「関数の責務と引数」小節を追加(Issue #6: 公開 API 表に関数の役割・引数の意味がなく各関数の動作がイメージできなかった点を是正)。各関数の責務・引数・戻り値の意味を `.h` の関数コメントと整合させて記述(本 SDD が設計の正本、`.h` コメントは実装上の反映)。公開 API 表(事前/事後条件)・設計内容・実装は不変(説明の補強のみ)。 | 開発者A |
