@@ -31,6 +31,8 @@ Therac-25 は 1982 年に AECL が開発した放射線治療装置です。1985
 
 > 本リポジトリは学術・教育目的の再構成(仮想)であり、当時の AECL 社内文書ではありません。事故に関する記述は学術文献(N. G. Leveson & C. S. Turner, "An Investigation of the Therac-25 Accidents", IEEE Computer, 1993 ほか)に基づきます。
 
+**各ハザードの事故発生メカニズムの詳細解説(Mermaid 図解付き)** は [Therac-25 ハザード解析・事故メカニズム解説(`THERAC25_HAZARD_ANALYSIS.md`)](./THERAC25_HAZARD_ANALYSIS.md) を参照してください。「IEC 62304 のプロセスを踏めば事故を防げたか」「ハザードがどうシステム要求(SRS / RCM)へ展開されるか」の観点で HZ-001〜003 + 横断要因を掘り下げています。
+
 ## 対象製品の概要
 
 | 項目 | 内容 |
@@ -153,6 +155,7 @@ cmake --build build-lib
 | SPRP | Software Problem Resolution Procedure | ソフトウェア問題解決手順書 | [`9_.../software_problem_resolution_procedure.md`](./9_software_problem_resolution_process/software_problem_resolution_procedure.md) |
 | ACL | Audit Checklist(IEC 62304 適合性) | IEC 62304 監査チェックリスト | [`compliance/audit_checklist.md`](./compliance/audit_checklist.md) |
 | QAR | Q&A Record(学習プロジェクト固有、CR-0004 で追加) | IEC 62304 Q&A 記録(学習過程の質問と回答の蓄積) | [`IEC62304_QA.md`](./IEC62304_QA.md) |
+| HZA | Hazard Analysis(学習プロジェクト固有、CR-0008 で追加) | Therac-25 ハザード解析・事故メカニズム解説(図解付き教材) | [`THERAC25_HAZARD_ANALYSIS.md`](./THERAC25_HAZARD_ANALYSIS.md) |
 
 ### トレーサビリティ用の ID プレフィックス
 
